@@ -1,0 +1,4 @@
+{
+    "cortex-debug.gdbpath": "C:/ST/STM32CubeIDE_1.15.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.200.202404151152/tools/bin/arm-none-eabi-gdb.exe",
+    "cortex-debug.stlinkPath": "C:/ST/STM32CubeIDE_1.15.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.stlinkserver.win32_2.1.200.202404121111/tools/ST-LINK_gdbserver.exe"
+}

@@ -1,0 +1,1929 @@
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"spi.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.CameraDmaComplete,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	CameraDmaComplete:
+  26              	.LVL0:
+  27              	.LFB237:
+  28              		.file 1 "Core/Src/spi.c"
+   1:Core/Src/spi.c **** /* USER CODE BEGIN Header */
+   2:Core/Src/spi.c **** /**
+   3:Core/Src/spi.c ****   ******************************************************************************
+   4:Core/Src/spi.c ****   * @file    spi.c
+   5:Core/Src/spi.c ****   * @brief   This file provides code for the configuration
+   6:Core/Src/spi.c ****   *          of the SPI instances.
+   7:Core/Src/spi.c ****   ******************************************************************************
+   8:Core/Src/spi.c ****   * @attention
+   9:Core/Src/spi.c ****   *
+  10:Core/Src/spi.c ****   * Copyright (c) 2026 STMicroelectronics.
+  11:Core/Src/spi.c ****   * All rights reserved.
+  12:Core/Src/spi.c ****   *
+  13:Core/Src/spi.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  14:Core/Src/spi.c ****   * in the root directory of this software component.
+  15:Core/Src/spi.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  16:Core/Src/spi.c ****   *
+  17:Core/Src/spi.c ****   ******************************************************************************
+  18:Core/Src/spi.c ****   */
+  19:Core/Src/spi.c **** /* USER CODE END Header */
+  20:Core/Src/spi.c **** /* Includes ------------------------------------------------------------------*/
+  21:Core/Src/spi.c **** #include "spi.h"
+  22:Core/Src/spi.c **** 
+  23:Core/Src/spi.c **** /* USER CODE BEGIN 0 */
+  24:Core/Src/spi.c **** #include "ArduCAM.h"
+  25:Core/Src/spi.c **** #include "usart.h"
+  26:Core/Src/spi.c **** 
+  27:Core/Src/spi.c **** /* USER CODE END 0 */
+  28:Core/Src/spi.c **** 
+  29:Core/Src/spi.c **** SPI_HandleTypeDef hspi1;
+  30:Core/Src/spi.c **** DMA_HandleTypeDef hdma_spi1_rx;
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 2
+
+
+  31:Core/Src/spi.c **** DMA_HandleTypeDef hdma_spi1_tx;
+  32:Core/Src/spi.c **** 
+  33:Core/Src/spi.c **** /* SPI1 init function */
+  34:Core/Src/spi.c **** void MX_SPI1_Init(void)
+  35:Core/Src/spi.c **** {
+  36:Core/Src/spi.c **** 
+  37:Core/Src/spi.c ****   /* USER CODE BEGIN SPI1_Init 0 */
+  38:Core/Src/spi.c **** 
+  39:Core/Src/spi.c ****   /* USER CODE END SPI1_Init 0 */
+  40:Core/Src/spi.c **** 
+  41:Core/Src/spi.c ****   /* USER CODE BEGIN SPI1_Init 1 */
+  42:Core/Src/spi.c **** 
+  43:Core/Src/spi.c ****   /* USER CODE END SPI1_Init 1 */
+  44:Core/Src/spi.c ****   hspi1.Instance = SPI1;
+  45:Core/Src/spi.c ****   hspi1.Init.Mode = SPI_MODE_MASTER;
+  46:Core/Src/spi.c ****   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  47:Core/Src/spi.c ****   hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  48:Core/Src/spi.c ****   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  49:Core/Src/spi.c ****   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  50:Core/Src/spi.c ****   hspi1.Init.NSS = SPI_NSS_SOFT;
+  51:Core/Src/spi.c ****   hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
+  52:Core/Src/spi.c ****   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  53:Core/Src/spi.c ****   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  54:Core/Src/spi.c ****   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  55:Core/Src/spi.c ****   hspi1.Init.CRCPolynomial = 7;
+  56:Core/Src/spi.c ****   hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+  57:Core/Src/spi.c ****   hspi1.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+  58:Core/Src/spi.c ****   if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  59:Core/Src/spi.c ****   {
+  60:Core/Src/spi.c ****     Error_Handler();
+  61:Core/Src/spi.c ****   }
+  62:Core/Src/spi.c ****   /* USER CODE BEGIN SPI1_Init 2 */
+  63:Core/Src/spi.c **** 
+  64:Core/Src/spi.c ****   /* USER CODE END SPI1_Init 2 */
+  65:Core/Src/spi.c **** 
+  66:Core/Src/spi.c **** }
+  67:Core/Src/spi.c **** 
+  68:Core/Src/spi.c **** void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
+  69:Core/Src/spi.c **** {
+  70:Core/Src/spi.c **** 
+  71:Core/Src/spi.c ****   GPIO_InitTypeDef GPIO_InitStruct = {0};
+  72:Core/Src/spi.c ****   if(spiHandle->Instance==SPI1)
+  73:Core/Src/spi.c ****   {
+  74:Core/Src/spi.c ****   /* USER CODE BEGIN SPI1_MspInit 0 */
+  75:Core/Src/spi.c **** 
+  76:Core/Src/spi.c ****   /* USER CODE END SPI1_MspInit 0 */
+  77:Core/Src/spi.c ****     /* SPI1 clock enable */
+  78:Core/Src/spi.c ****     __HAL_RCC_SPI1_CLK_ENABLE();
+  79:Core/Src/spi.c **** 
+  80:Core/Src/spi.c ****     __HAL_RCC_GPIOA_CLK_ENABLE();
+  81:Core/Src/spi.c ****     /**SPI1 GPIO Configuration
+  82:Core/Src/spi.c ****     PA1     ------> SPI1_SCK
+  83:Core/Src/spi.c ****     PA6     ------> SPI1_MISO
+  84:Core/Src/spi.c ****     PA7     ------> SPI1_MOSI
+  85:Core/Src/spi.c ****     */
+  86:Core/Src/spi.c ****     GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_6|GPIO_PIN_7;
+  87:Core/Src/spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 3
+
+
+  88:Core/Src/spi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+  89:Core/Src/spi.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  90:Core/Src/spi.c ****     GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
+  91:Core/Src/spi.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  92:Core/Src/spi.c **** 
+  93:Core/Src/spi.c ****     /* SPI1 DMA Init */
+  94:Core/Src/spi.c ****     /* SPI1_RX Init */
+  95:Core/Src/spi.c ****     hdma_spi1_rx.Instance = DMA1_Channel2;
+  96:Core/Src/spi.c ****     hdma_spi1_rx.Init.Request = DMA_REQUEST_1;
+  97:Core/Src/spi.c ****     hdma_spi1_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+  98:Core/Src/spi.c ****     hdma_spi1_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+  99:Core/Src/spi.c ****     hdma_spi1_rx.Init.MemInc = DMA_MINC_ENABLE;
+ 100:Core/Src/spi.c ****     hdma_spi1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+ 101:Core/Src/spi.c ****     hdma_spi1_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+ 102:Core/Src/spi.c ****     hdma_spi1_rx.Init.Mode = DMA_NORMAL;
+ 103:Core/Src/spi.c ****     hdma_spi1_rx.Init.Priority = DMA_PRIORITY_LOW;
+ 104:Core/Src/spi.c ****     if (HAL_DMA_Init(&hdma_spi1_rx) != HAL_OK)
+ 105:Core/Src/spi.c ****     {
+ 106:Core/Src/spi.c ****       Error_Handler();
+ 107:Core/Src/spi.c ****     }
+ 108:Core/Src/spi.c **** 
+ 109:Core/Src/spi.c ****     __HAL_LINKDMA(spiHandle,hdmarx,hdma_spi1_rx);
+ 110:Core/Src/spi.c **** 
+ 111:Core/Src/spi.c ****     /* SPI1_TX Init */
+ 112:Core/Src/spi.c ****     hdma_spi1_tx.Instance = DMA1_Channel3;
+ 113:Core/Src/spi.c ****     hdma_spi1_tx.Init.Request = DMA_REQUEST_1;
+ 114:Core/Src/spi.c ****     hdma_spi1_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
+ 115:Core/Src/spi.c ****     hdma_spi1_tx.Init.PeriphInc = DMA_PINC_DISABLE;
+ 116:Core/Src/spi.c ****     hdma_spi1_tx.Init.MemInc = DMA_MINC_ENABLE;
+ 117:Core/Src/spi.c ****     hdma_spi1_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+ 118:Core/Src/spi.c ****     hdma_spi1_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+ 119:Core/Src/spi.c ****     hdma_spi1_tx.Init.Mode = DMA_NORMAL;
+ 120:Core/Src/spi.c ****     hdma_spi1_tx.Init.Priority = DMA_PRIORITY_LOW;
+ 121:Core/Src/spi.c ****     if (HAL_DMA_Init(&hdma_spi1_tx) != HAL_OK)
+ 122:Core/Src/spi.c ****     {
+ 123:Core/Src/spi.c ****       Error_Handler();
+ 124:Core/Src/spi.c ****     }
+ 125:Core/Src/spi.c **** 
+ 126:Core/Src/spi.c ****     __HAL_LINKDMA(spiHandle,hdmatx,hdma_spi1_tx);
+ 127:Core/Src/spi.c **** 
+ 128:Core/Src/spi.c ****   /* USER CODE BEGIN SPI1_MspInit 1 */
+ 129:Core/Src/spi.c **** 
+ 130:Core/Src/spi.c ****   /* USER CODE END SPI1_MspInit 1 */
+ 131:Core/Src/spi.c ****   }
+ 132:Core/Src/spi.c **** }
+ 133:Core/Src/spi.c **** 
+ 134:Core/Src/spi.c **** void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
+ 135:Core/Src/spi.c **** {
+ 136:Core/Src/spi.c **** 
+ 137:Core/Src/spi.c ****   if(spiHandle->Instance==SPI1)
+ 138:Core/Src/spi.c ****   {
+ 139:Core/Src/spi.c ****   /* USER CODE BEGIN SPI1_MspDeInit 0 */
+ 140:Core/Src/spi.c **** 
+ 141:Core/Src/spi.c ****   /* USER CODE END SPI1_MspDeInit 0 */
+ 142:Core/Src/spi.c ****     /* Peripheral clock disable */
+ 143:Core/Src/spi.c ****     __HAL_RCC_SPI1_CLK_DISABLE();
+ 144:Core/Src/spi.c **** 
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 4
+
+
+ 145:Core/Src/spi.c ****     /**SPI1 GPIO Configuration
+ 146:Core/Src/spi.c ****     PA1     ------> SPI1_SCK
+ 147:Core/Src/spi.c ****     PA6     ------> SPI1_MISO
+ 148:Core/Src/spi.c ****     PA7     ------> SPI1_MOSI
+ 149:Core/Src/spi.c ****     */
+ 150:Core/Src/spi.c ****     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_1|GPIO_PIN_6|GPIO_PIN_7);
+ 151:Core/Src/spi.c **** 
+ 152:Core/Src/spi.c ****     /* SPI1 DMA DeInit */
+ 153:Core/Src/spi.c ****     HAL_DMA_DeInit(spiHandle->hdmarx);
+ 154:Core/Src/spi.c ****     HAL_DMA_DeInit(spiHandle->hdmatx);
+ 155:Core/Src/spi.c ****   /* USER CODE BEGIN SPI1_MspDeInit 1 */
+ 156:Core/Src/spi.c **** 
+ 157:Core/Src/spi.c ****   /* USER CODE END SPI1_MspDeInit 1 */
+ 158:Core/Src/spi.c ****   }
+ 159:Core/Src/spi.c **** }
+ 160:Core/Src/spi.c **** 
+ 161:Core/Src/spi.c **** /* USER CODE BEGIN 1 */
+ 162:Core/Src/spi.c **** 
+ 163:Core/Src/spi.c **** uint8_t *picbuf = NULL;
+ 164:Core/Src/spi.c **** volatile bool receive_OK = false;
+ 165:Core/Src/spi.c **** volatile bool send_OK = true;
+ 166:Core/Src/spi.c **** volatile uint32_t sendlen = 0U;
+ 167:Core/Src/spi.c **** volatile uint32_t jpeglen = 0U;
+ 168:Core/Src/spi.c **** static uint8_t buf1[BUFFER_MAX_SIZE];
+ 169:Core/Src/spi.c **** static uint8_t spiDummyTx[BUFFER_MAX_SIZE];
+ 170:Core/Src/spi.c **** 
+ 171:Core/Src/spi.c **** uint8_t SPI1_ReadWriteByte(uint8_t txData)
+ 172:Core/Src/spi.c **** {
+ 173:Core/Src/spi.c ****   uint8_t rxData = 0U;
+ 174:Core/Src/spi.c **** 
+ 175:Core/Src/spi.c ****   if (HAL_SPI_TransmitReceive(&hspi1, &txData, &rxData, 1U,
+ 176:Core/Src/spi.c ****                               HAL_MAX_DELAY) != HAL_OK)
+ 177:Core/Src/spi.c ****   {
+ 178:Core/Src/spi.c ****     return 0U;
+ 179:Core/Src/spi.c ****   }
+ 180:Core/Src/spi.c **** 
+ 181:Core/Src/spi.c ****   return rxData;
+ 182:Core/Src/spi.c **** }
+ 183:Core/Src/spi.c **** 
+ 184:Core/Src/spi.c **** void DMA1_RX(uint8_t *buffer, uint32_t length)
+ 185:Core/Src/spi.c **** {
+ 186:Core/Src/spi.c ****   if (buffer == NULL || length == 0U)
+ 187:Core/Src/spi.c ****   {
+ 188:Core/Src/spi.c ****     return;
+ 189:Core/Src/spi.c ****   }
+ 190:Core/Src/spi.c **** 
+ 191:Core/Src/spi.c ****   CS_LOW();
+ 192:Core/Src/spi.c ****   set_fifo_burst();
+ 193:Core/Src/spi.c ****   if (HAL_SPI_TransmitReceive_DMA(&hspi1, spiDummyTx, buffer, length) != HAL_OK)
+ 194:Core/Src/spi.c ****   {
+ 195:Core/Src/spi.c ****     CS_HIGH();
+ 196:Core/Src/spi.c ****   }
+ 197:Core/Src/spi.c **** }
+ 198:Core/Src/spi.c **** 
+ 199:Core/Src/spi.c **** void DMA1_SendtoUart(uint8_t *buffer, uint32_t length)
+ 200:Core/Src/spi.c **** {
+ 201:Core/Src/spi.c ****   if (buffer != NULL && length > 0U)
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 5
+
+
+ 202:Core/Src/spi.c ****   {
+ 203:Core/Src/spi.c ****     (void)HAL_UART_Transmit_DMA(&huart4, buffer, length);
+ 204:Core/Src/spi.c ****   }
+ 205:Core/Src/spi.c **** }
+ 206:Core/Src/spi.c **** 
+ 207:Core/Src/spi.c **** bool SendImageToESP(const uint8_t *buffer, uint32_t length)
+ 208:Core/Src/spi.c **** {
+ 209:Core/Src/spi.c ****   static const uint8_t imageHeader[3] = {'I', 'M', 'G'};
+ 210:Core/Src/spi.c **** 
+ 211:Core/Src/spi.c ****   if (buffer == NULL || length == 0U)
+ 212:Core/Src/spi.c ****   {
+ 213:Core/Src/spi.c ****     return false;
+ 214:Core/Src/spi.c ****   }
+ 215:Core/Src/spi.c **** 
+ 216:Core/Src/spi.c ****   if (HAL_UART_Transmit(&huart4, (uint8_t *)imageHeader,
+ 217:Core/Src/spi.c ****                         sizeof(imageHeader), HAL_MAX_DELAY) != HAL_OK)
+ 218:Core/Src/spi.c ****   {
+ 219:Core/Src/spi.c ****     return false;
+ 220:Core/Src/spi.c ****   }
+ 221:Core/Src/spi.c **** 
+ 222:Core/Src/spi.c ****   return HAL_UART_Transmit(&huart4, (uint8_t *)buffer, length,
+ 223:Core/Src/spi.c ****                            HAL_MAX_DELAY) == HAL_OK;
+ 224:Core/Src/spi.c **** }
+ 225:Core/Src/spi.c **** 
+ 226:Core/Src/spi.c **** void SendBufferAsHex(uint8_t *buffer, uint32_t length)
+ 227:Core/Src/spi.c **** {
+ 228:Core/Src/spi.c ****   static const char hexDigits[] = "0123456789ABCDEF";
+ 229:Core/Src/spi.c ****   uint8_t output[3] = {0U, 0U, ' '};
+ 230:Core/Src/spi.c ****   uint8_t newline = '\n';
+ 231:Core/Src/spi.c **** 
+ 232:Core/Src/spi.c ****   for (uint32_t i = 0U; i < length; i++)
+ 233:Core/Src/spi.c ****   {
+ 234:Core/Src/spi.c ****     output[0] = (uint8_t)hexDigits[buffer[i] >> 4];
+ 235:Core/Src/spi.c ****     output[1] = (uint8_t)hexDigits[buffer[i] & 0x0FU];
+ 236:Core/Src/spi.c ****     (void)HAL_UART_Transmit(&huart4, output, sizeof(output), HAL_MAX_DELAY);
+ 237:Core/Src/spi.c ****   }
+ 238:Core/Src/spi.c ****   (void)HAL_UART_Transmit(&huart4, &newline, 1U, HAL_MAX_DELAY);
+ 239:Core/Src/spi.c **** }
+ 240:Core/Src/spi.c **** 
+ 241:Core/Src/spi.c **** void SingleCapTransfer(void)
+ 242:Core/Src/spi.c **** {
+ 243:Core/Src/spi.c ****   uint32_t length;
+ 244:Core/Src/spi.c **** 
+ 245:Core/Src/spi.c ****   flush_fifo();
+ 246:Core/Src/spi.c ****   clear_fifo_flag();
+ 247:Core/Src/spi.c ****   start_capture();
+ 248:Core/Src/spi.c ****   while (get_bit(ARDUCHIP_TRIG, CAP_DONE_MASK) == 0U)
+ 249:Core/Src/spi.c ****   {
+ 250:Core/Src/spi.c ****   }
+ 251:Core/Src/spi.c **** 
+ 252:Core/Src/spi.c ****   length = read_fifo_length();
+ 253:Core/Src/spi.c ****   /*
+ 254:Core/Src/spi.c ****    * The first byte returned after BURST_FIFO_READ is a dummy byte.
+ 255:Core/Src/spi.c ****    * Reserve one buffer byte for it so the actual FIFO data starts at buf1[1].
+ 256:Core/Src/spi.c ****    */
+ 257:Core/Src/spi.c ****   sendlen = length < (BUFFER_MAX_SIZE - 1U)
+ 258:Core/Src/spi.c ****               ? length : (BUFFER_MAX_SIZE - 1U);
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 6
+
+
+ 259:Core/Src/spi.c ****   picbuf = &buf1[1];
+ 260:Core/Src/spi.c ****   receive_OK = false;
+ 261:Core/Src/spi.c ****   jpeglen = 0U;
+ 262:Core/Src/spi.c ****   DMA1_RX(picbuf, sendlen + 1U);
+ 263:Core/Src/spi.c **** }
+ 264:Core/Src/spi.c **** 
+ 265:Core/Src/spi.c **** static void CameraDmaComplete(SPI_HandleTypeDef *spiHandle)
+ 266:Core/Src/spi.c **** {
+  29              		.loc 1 266 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 266 1 is_stmt 0 view .LVU1
+  34 0000 08B5     		push	{r3, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 3, -8
+  38              		.cfi_offset 14, -4
+ 267:Core/Src/spi.c ****   if (spiHandle == &hspi1)
+  39              		.loc 1 267 3 is_stmt 1 view .LVU2
+  40              		.loc 1 267 6 is_stmt 0 view .LVU3
+  41 0002 124B     		ldr	r3, .L9
+  42 0004 8342     		cmp	r3, r0
+  43 0006 00D0     		beq	.L8
+  44              	.LVL1:
+  45              	.L1:
+ 268:Core/Src/spi.c ****   {
+ 269:Core/Src/spi.c ****     CS_HIGH();
+ 270:Core/Src/spi.c ****     receive_OK = true;
+ 271:Core/Src/spi.c ****     for (uint32_t i = sendlen + 1U; i >= 3U; i--)
+ 272:Core/Src/spi.c ****     {
+ 273:Core/Src/spi.c ****       uint32_t index = i - 2U;
+ 274:Core/Src/spi.c ****       if (buf1[index] == 0xFFU && buf1[index + 1U] == 0xD9U)
+ 275:Core/Src/spi.c ****       {
+ 276:Core/Src/spi.c ****         jpeglen = i - 1U;
+ 277:Core/Src/spi.c ****         break;
+ 278:Core/Src/spi.c ****       }
+ 279:Core/Src/spi.c ****     }
+ 280:Core/Src/spi.c ****     if (jpeglen == 0U)
+ 281:Core/Src/spi.c ****     {
+ 282:Core/Src/spi.c ****       jpeglen = sendlen;
+ 283:Core/Src/spi.c ****     }
+ 284:Core/Src/spi.c ****   }
+ 285:Core/Src/spi.c **** }
+  46              		.loc 1 285 1 view .LVU4
+  47 0008 08BD     		pop	{r3, pc}
+  48              	.LVL2:
+  49              	.L8:
+ 269:Core/Src/spi.c ****     receive_OK = true;
+  50              		.loc 1 269 5 is_stmt 1 view .LVU5
+  51 000a FFF7FEFF 		bl	CS_HIGH
+  52              	.LVL3:
+ 270:Core/Src/spi.c ****     for (uint32_t i = sendlen + 1U; i >= 3U; i--)
+  53              		.loc 1 270 5 view .LVU6
+ 270:Core/Src/spi.c ****     for (uint32_t i = sendlen + 1U; i >= 3U; i--)
+  54              		.loc 1 270 16 is_stmt 0 view .LVU7
+  55 000e 104B     		ldr	r3, .L9+4
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 7
+
+
+  56 0010 0122     		movs	r2, #1
+  57 0012 1A70     		strb	r2, [r3]
+ 271:Core/Src/spi.c ****     {
+  58              		.loc 1 271 5 is_stmt 1 view .LVU8
+  59              	.LBB2:
+ 271:Core/Src/spi.c ****     {
+  60              		.loc 1 271 10 view .LVU9
+ 271:Core/Src/spi.c ****     {
+  61              		.loc 1 271 31 is_stmt 0 view .LVU10
+  62 0014 0F4B     		ldr	r3, .L9+8
+  63 0016 1B68     		ldr	r3, [r3]
+ 271:Core/Src/spi.c ****     {
+  64              		.loc 1 271 19 view .LVU11
+  65 0018 1344     		add	r3, r3, r2
+  66              	.LVL4:
+ 271:Core/Src/spi.c ****     {
+  67              		.loc 1 271 5 view .LVU12
+  68 001a 00E0     		b	.L3
+  69              	.L4:
+ 271:Core/Src/spi.c ****     {
+  70              		.loc 1 271 46 is_stmt 1 discriminator 2 view .LVU13
+ 271:Core/Src/spi.c ****     {
+  71              		.loc 1 271 47 is_stmt 0 discriminator 2 view .LVU14
+  72 001c 013B     		subs	r3, r3, #1
+  73              	.LVL5:
+  74              	.L3:
+ 271:Core/Src/spi.c ****     {
+  75              		.loc 1 271 37 is_stmt 1 discriminator 1 view .LVU15
+ 271:Core/Src/spi.c ****     {
+  76              		.loc 1 271 5 is_stmt 0 discriminator 1 view .LVU16
+  77 001e 022B     		cmp	r3, #2
+  78 0020 0AD9     		bls	.L5
+  79              	.LBB3:
+ 273:Core/Src/spi.c ****       if (buf1[index] == 0xFFU && buf1[index + 1U] == 0xD9U)
+  80              		.loc 1 273 7 is_stmt 1 view .LVU17
+ 273:Core/Src/spi.c ****       if (buf1[index] == 0xFFU && buf1[index + 1U] == 0xD9U)
+  81              		.loc 1 273 16 is_stmt 0 view .LVU18
+  82 0022 9A1E     		subs	r2, r3, #2
+ 274:Core/Src/spi.c ****       {
+  83              		.loc 1 274 7 is_stmt 1 view .LVU19
+ 274:Core/Src/spi.c ****       {
+  84              		.loc 1 274 15 is_stmt 0 view .LVU20
+  85 0024 0C49     		ldr	r1, .L9+12
+  86 0026 8A5C     		ldrb	r2, [r1, r2]	@ zero_extendqisi2
+ 274:Core/Src/spi.c ****       {
+  87              		.loc 1 274 10 view .LVU21
+  88 0028 FF2A     		cmp	r2, #255
+  89 002a F7D1     		bne	.L4
+ 274:Core/Src/spi.c ****       {
+  90              		.loc 1 274 46 discriminator 1 view .LVU22
+  91 002c 5A1E     		subs	r2, r3, #1
+ 274:Core/Src/spi.c ****       {
+  92              		.loc 1 274 39 discriminator 1 view .LVU23
+  93 002e 895C     		ldrb	r1, [r1, r2]	@ zero_extendqisi2
+ 274:Core/Src/spi.c ****       {
+  94              		.loc 1 274 32 discriminator 1 view .LVU24
+  95 0030 D929     		cmp	r1, #217
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 8
+
+
+  96 0032 F3D1     		bne	.L4
+ 276:Core/Src/spi.c ****         break;
+  97              		.loc 1 276 9 is_stmt 1 view .LVU25
+ 276:Core/Src/spi.c ****         break;
+  98              		.loc 1 276 17 is_stmt 0 view .LVU26
+  99 0034 094B     		ldr	r3, .L9+16
+ 100              	.LVL6:
+ 276:Core/Src/spi.c ****         break;
+ 101              		.loc 1 276 17 view .LVU27
+ 102 0036 1A60     		str	r2, [r3]
+ 277:Core/Src/spi.c ****       }
+ 103              		.loc 1 277 9 is_stmt 1 view .LVU28
+ 104              	.LVL7:
+ 105              	.L5:
+ 277:Core/Src/spi.c ****       }
+ 106              		.loc 1 277 9 is_stmt 0 view .LVU29
+ 107              	.LBE3:
+ 108              	.LBE2:
+ 280:Core/Src/spi.c ****     {
+ 109              		.loc 1 280 5 is_stmt 1 view .LVU30
+ 280:Core/Src/spi.c ****     {
+ 110              		.loc 1 280 17 is_stmt 0 view .LVU31
+ 111 0038 084B     		ldr	r3, .L9+16
+ 112 003a 1B68     		ldr	r3, [r3]
+ 280:Core/Src/spi.c ****     {
+ 113              		.loc 1 280 8 view .LVU32
+ 114 003c 002B     		cmp	r3, #0
+ 115 003e E3D1     		bne	.L1
+ 282:Core/Src/spi.c ****     }
+ 116              		.loc 1 282 7 is_stmt 1 view .LVU33
+ 282:Core/Src/spi.c ****     }
+ 117              		.loc 1 282 15 is_stmt 0 view .LVU34
+ 118 0040 044B     		ldr	r3, .L9+8
+ 119 0042 1A68     		ldr	r2, [r3]
+ 120 0044 054B     		ldr	r3, .L9+16
+ 121 0046 1A60     		str	r2, [r3]
+ 122              		.loc 1 285 1 view .LVU35
+ 123 0048 DEE7     		b	.L1
+ 124              	.L10:
+ 125 004a 00BF     		.align	2
+ 126              	.L9:
+ 127 004c 00000000 		.word	.LANCHOR0
+ 128 0050 00000000 		.word	.LANCHOR1
+ 129 0054 00000000 		.word	.LANCHOR2
+ 130 0058 00000000 		.word	buf1
+ 131 005c 00000000 		.word	.LANCHOR3
+ 132              		.cfi_endproc
+ 133              	.LFE237:
+ 135              		.section	.text.MX_SPI1_Init,"ax",%progbits
+ 136              		.align	1
+ 137              		.global	MX_SPI1_Init
+ 138              		.syntax unified
+ 139              		.thumb
+ 140              		.thumb_func
+ 142              	MX_SPI1_Init:
+ 143              	.LFB228:
+  35:Core/Src/spi.c **** 
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 9
+
+
+ 144              		.loc 1 35 1 is_stmt 1 view -0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148 0000 08B5     		push	{r3, lr}
+ 149              	.LCFI1:
+ 150              		.cfi_def_cfa_offset 8
+ 151              		.cfi_offset 3, -8
+ 152              		.cfi_offset 14, -4
+  44:Core/Src/spi.c ****   hspi1.Init.Mode = SPI_MODE_MASTER;
+ 153              		.loc 1 44 3 view .LVU37
+  44:Core/Src/spi.c ****   hspi1.Init.Mode = SPI_MODE_MASTER;
+ 154              		.loc 1 44 18 is_stmt 0 view .LVU38
+ 155 0002 1048     		ldr	r0, .L15
+ 156 0004 104B     		ldr	r3, .L15+4
+ 157 0006 0360     		str	r3, [r0]
+  45:Core/Src/spi.c ****   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+ 158              		.loc 1 45 3 is_stmt 1 view .LVU39
+  45:Core/Src/spi.c ****   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+ 159              		.loc 1 45 19 is_stmt 0 view .LVU40
+ 160 0008 4FF48273 		mov	r3, #260
+ 161 000c 4360     		str	r3, [r0, #4]
+  46:Core/Src/spi.c ****   hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+ 162              		.loc 1 46 3 is_stmt 1 view .LVU41
+  46:Core/Src/spi.c ****   hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+ 163              		.loc 1 46 24 is_stmt 0 view .LVU42
+ 164 000e 0023     		movs	r3, #0
+ 165 0010 8360     		str	r3, [r0, #8]
+  47:Core/Src/spi.c ****   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+ 166              		.loc 1 47 3 is_stmt 1 view .LVU43
+  47:Core/Src/spi.c ****   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+ 167              		.loc 1 47 23 is_stmt 0 view .LVU44
+ 168 0012 4FF4E062 		mov	r2, #1792
+ 169 0016 C260     		str	r2, [r0, #12]
+  48:Core/Src/spi.c ****   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+ 170              		.loc 1 48 3 is_stmt 1 view .LVU45
+  48:Core/Src/spi.c ****   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+ 171              		.loc 1 48 26 is_stmt 0 view .LVU46
+ 172 0018 0361     		str	r3, [r0, #16]
+  49:Core/Src/spi.c ****   hspi1.Init.NSS = SPI_NSS_SOFT;
+ 173              		.loc 1 49 3 is_stmt 1 view .LVU47
+  49:Core/Src/spi.c ****   hspi1.Init.NSS = SPI_NSS_SOFT;
+ 174              		.loc 1 49 23 is_stmt 0 view .LVU48
+ 175 001a 4361     		str	r3, [r0, #20]
+  50:Core/Src/spi.c ****   hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
+ 176              		.loc 1 50 3 is_stmt 1 view .LVU49
+  50:Core/Src/spi.c ****   hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
+ 177              		.loc 1 50 18 is_stmt 0 view .LVU50
+ 178 001c 4FF40072 		mov	r2, #512
+ 179 0020 8261     		str	r2, [r0, #24]
+  51:Core/Src/spi.c ****   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+ 180              		.loc 1 51 3 is_stmt 1 view .LVU51
+  51:Core/Src/spi.c ****   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+ 181              		.loc 1 51 32 is_stmt 0 view .LVU52
+ 182 0022 0822     		movs	r2, #8
+ 183 0024 C261     		str	r2, [r0, #28]
+  52:Core/Src/spi.c ****   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 10
+
+
+ 184              		.loc 1 52 3 is_stmt 1 view .LVU53
+  52:Core/Src/spi.c ****   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+ 185              		.loc 1 52 23 is_stmt 0 view .LVU54
+ 186 0026 0362     		str	r3, [r0, #32]
+  53:Core/Src/spi.c ****   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+ 187              		.loc 1 53 3 is_stmt 1 view .LVU55
+  53:Core/Src/spi.c ****   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+ 188              		.loc 1 53 21 is_stmt 0 view .LVU56
+ 189 0028 4362     		str	r3, [r0, #36]
+  54:Core/Src/spi.c ****   hspi1.Init.CRCPolynomial = 7;
+ 190              		.loc 1 54 3 is_stmt 1 view .LVU57
+  54:Core/Src/spi.c ****   hspi1.Init.CRCPolynomial = 7;
+ 191              		.loc 1 54 29 is_stmt 0 view .LVU58
+ 192 002a 8362     		str	r3, [r0, #40]
+  55:Core/Src/spi.c ****   hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+ 193              		.loc 1 55 3 is_stmt 1 view .LVU59
+  55:Core/Src/spi.c ****   hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+ 194              		.loc 1 55 28 is_stmt 0 view .LVU60
+ 195 002c 0721     		movs	r1, #7
+ 196 002e C162     		str	r1, [r0, #44]
+  56:Core/Src/spi.c ****   hspi1.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+ 197              		.loc 1 56 3 is_stmt 1 view .LVU61
+  56:Core/Src/spi.c ****   hspi1.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+ 198              		.loc 1 56 24 is_stmt 0 view .LVU62
+ 199 0030 0363     		str	r3, [r0, #48]
+  57:Core/Src/spi.c ****   if (HAL_SPI_Init(&hspi1) != HAL_OK)
+ 200              		.loc 1 57 3 is_stmt 1 view .LVU63
+  57:Core/Src/spi.c ****   if (HAL_SPI_Init(&hspi1) != HAL_OK)
+ 201              		.loc 1 57 23 is_stmt 0 view .LVU64
+ 202 0032 4263     		str	r2, [r0, #52]
+  58:Core/Src/spi.c ****   {
+ 203              		.loc 1 58 3 is_stmt 1 view .LVU65
+  58:Core/Src/spi.c ****   {
+ 204              		.loc 1 58 7 is_stmt 0 view .LVU66
+ 205 0034 FFF7FEFF 		bl	HAL_SPI_Init
+ 206              	.LVL8:
+  58:Core/Src/spi.c ****   {
+ 207              		.loc 1 58 6 view .LVU67
+ 208 0038 00B9     		cbnz	r0, .L14
+ 209              	.L11:
+  66:Core/Src/spi.c **** 
+ 210              		.loc 1 66 1 view .LVU68
+ 211 003a 08BD     		pop	{r3, pc}
+ 212              	.L14:
+  60:Core/Src/spi.c ****   }
+ 213              		.loc 1 60 5 is_stmt 1 view .LVU69
+ 214 003c FFF7FEFF 		bl	Error_Handler
+ 215              	.LVL9:
+  66:Core/Src/spi.c **** 
+ 216              		.loc 1 66 1 is_stmt 0 view .LVU70
+ 217 0040 FBE7     		b	.L11
+ 218              	.L16:
+ 219 0042 00BF     		.align	2
+ 220              	.L15:
+ 221 0044 00000000 		.word	.LANCHOR0
+ 222 0048 00300140 		.word	1073819648
+ 223              		.cfi_endproc
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 11
+
+
+ 224              	.LFE228:
+ 226              		.section	.text.HAL_SPI_MspInit,"ax",%progbits
+ 227              		.align	1
+ 228              		.global	HAL_SPI_MspInit
+ 229              		.syntax unified
+ 230              		.thumb
+ 231              		.thumb_func
+ 233              	HAL_SPI_MspInit:
+ 234              	.LVL10:
+ 235              	.LFB229:
+  69:Core/Src/spi.c **** 
+ 236              		.loc 1 69 1 is_stmt 1 view -0
+ 237              		.cfi_startproc
+ 238              		@ args = 0, pretend = 0, frame = 32
+ 239              		@ frame_needed = 0, uses_anonymous_args = 0
+  69:Core/Src/spi.c **** 
+ 240              		.loc 1 69 1 is_stmt 0 view .LVU72
+ 241 0000 10B5     		push	{r4, lr}
+ 242              	.LCFI2:
+ 243              		.cfi_def_cfa_offset 8
+ 244              		.cfi_offset 4, -8
+ 245              		.cfi_offset 14, -4
+ 246 0002 88B0     		sub	sp, sp, #32
+ 247              	.LCFI3:
+ 248              		.cfi_def_cfa_offset 40
+  71:Core/Src/spi.c ****   if(spiHandle->Instance==SPI1)
+ 249              		.loc 1 71 3 is_stmt 1 view .LVU73
+  71:Core/Src/spi.c ****   if(spiHandle->Instance==SPI1)
+ 250              		.loc 1 71 20 is_stmt 0 view .LVU74
+ 251 0004 0023     		movs	r3, #0
+ 252 0006 0393     		str	r3, [sp, #12]
+ 253 0008 0493     		str	r3, [sp, #16]
+ 254 000a 0593     		str	r3, [sp, #20]
+ 255 000c 0693     		str	r3, [sp, #24]
+ 256 000e 0793     		str	r3, [sp, #28]
+  72:Core/Src/spi.c ****   {
+ 257              		.loc 1 72 3 is_stmt 1 view .LVU75
+  72:Core/Src/spi.c ****   {
+ 258              		.loc 1 72 15 is_stmt 0 view .LVU76
+ 259 0010 0268     		ldr	r2, [r0]
+  72:Core/Src/spi.c ****   {
+ 260              		.loc 1 72 5 view .LVU77
+ 261 0012 2B4B     		ldr	r3, .L25
+ 262 0014 9A42     		cmp	r2, r3
+ 263 0016 01D0     		beq	.L22
+ 264              	.LVL11:
+ 265              	.L17:
+ 132:Core/Src/spi.c **** 
+ 266              		.loc 1 132 1 view .LVU78
+ 267 0018 08B0     		add	sp, sp, #32
+ 268              	.LCFI4:
+ 269              		.cfi_remember_state
+ 270              		.cfi_def_cfa_offset 8
+ 271              		@ sp needed
+ 272 001a 10BD     		pop	{r4, pc}
+ 273              	.LVL12:
+ 274              	.L22:
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 12
+
+
+ 275              	.LCFI5:
+ 276              		.cfi_restore_state
+ 132:Core/Src/spi.c **** 
+ 277              		.loc 1 132 1 view .LVU79
+ 278 001c 0446     		mov	r4, r0
+  78:Core/Src/spi.c **** 
+ 279              		.loc 1 78 5 is_stmt 1 view .LVU80
+ 280              	.LBB4:
+  78:Core/Src/spi.c **** 
+ 281              		.loc 1 78 5 view .LVU81
+  78:Core/Src/spi.c **** 
+ 282              		.loc 1 78 5 view .LVU82
+ 283 001e 03F56043 		add	r3, r3, #57344
+ 284 0022 1A6E     		ldr	r2, [r3, #96]
+ 285 0024 42F48052 		orr	r2, r2, #4096
+ 286 0028 1A66     		str	r2, [r3, #96]
+  78:Core/Src/spi.c **** 
+ 287              		.loc 1 78 5 view .LVU83
+ 288 002a 1A6E     		ldr	r2, [r3, #96]
+ 289 002c 02F48052 		and	r2, r2, #4096
+ 290 0030 0192     		str	r2, [sp, #4]
+  78:Core/Src/spi.c **** 
+ 291              		.loc 1 78 5 view .LVU84
+ 292 0032 019A     		ldr	r2, [sp, #4]
+ 293              	.LBE4:
+  78:Core/Src/spi.c **** 
+ 294              		.loc 1 78 5 view .LVU85
+  80:Core/Src/spi.c ****     /**SPI1 GPIO Configuration
+ 295              		.loc 1 80 5 view .LVU86
+ 296              	.LBB5:
+  80:Core/Src/spi.c ****     /**SPI1 GPIO Configuration
+ 297              		.loc 1 80 5 view .LVU87
+  80:Core/Src/spi.c ****     /**SPI1 GPIO Configuration
+ 298              		.loc 1 80 5 view .LVU88
+ 299 0034 DA6C     		ldr	r2, [r3, #76]
+ 300 0036 42F00102 		orr	r2, r2, #1
+ 301 003a DA64     		str	r2, [r3, #76]
+  80:Core/Src/spi.c ****     /**SPI1 GPIO Configuration
+ 302              		.loc 1 80 5 view .LVU89
+ 303 003c DB6C     		ldr	r3, [r3, #76]
+ 304 003e 03F00103 		and	r3, r3, #1
+ 305 0042 0293     		str	r3, [sp, #8]
+  80:Core/Src/spi.c ****     /**SPI1 GPIO Configuration
+ 306              		.loc 1 80 5 view .LVU90
+ 307 0044 029B     		ldr	r3, [sp, #8]
+ 308              	.LBE5:
+  80:Core/Src/spi.c ****     /**SPI1 GPIO Configuration
+ 309              		.loc 1 80 5 view .LVU91
+  86:Core/Src/spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 310              		.loc 1 86 5 view .LVU92
+  86:Core/Src/spi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 311              		.loc 1 86 25 is_stmt 0 view .LVU93
+ 312 0046 C223     		movs	r3, #194
+ 313 0048 0393     		str	r3, [sp, #12]
+  87:Core/Src/spi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 314              		.loc 1 87 5 is_stmt 1 view .LVU94
+  87:Core/Src/spi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 13
+
+
+ 315              		.loc 1 87 26 is_stmt 0 view .LVU95
+ 316 004a 0223     		movs	r3, #2
+ 317 004c 0493     		str	r3, [sp, #16]
+  88:Core/Src/spi.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 318              		.loc 1 88 5 is_stmt 1 view .LVU96
+  89:Core/Src/spi.c ****     GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
+ 319              		.loc 1 89 5 view .LVU97
+  89:Core/Src/spi.c ****     GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
+ 320              		.loc 1 89 27 is_stmt 0 view .LVU98
+ 321 004e 0323     		movs	r3, #3
+ 322 0050 0693     		str	r3, [sp, #24]
+  90:Core/Src/spi.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 323              		.loc 1 90 5 is_stmt 1 view .LVU99
+  90:Core/Src/spi.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 324              		.loc 1 90 31 is_stmt 0 view .LVU100
+ 325 0052 0523     		movs	r3, #5
+ 326 0054 0793     		str	r3, [sp, #28]
+  91:Core/Src/spi.c **** 
+ 327              		.loc 1 91 5 is_stmt 1 view .LVU101
+ 328 0056 03A9     		add	r1, sp, #12
+ 329 0058 4FF09040 		mov	r0, #1207959552
+ 330              	.LVL13:
+  91:Core/Src/spi.c **** 
+ 331              		.loc 1 91 5 is_stmt 0 view .LVU102
+ 332 005c FFF7FEFF 		bl	HAL_GPIO_Init
+ 333              	.LVL14:
+  95:Core/Src/spi.c ****     hdma_spi1_rx.Init.Request = DMA_REQUEST_1;
+ 334              		.loc 1 95 5 is_stmt 1 view .LVU103
+  95:Core/Src/spi.c ****     hdma_spi1_rx.Init.Request = DMA_REQUEST_1;
+ 335              		.loc 1 95 27 is_stmt 0 view .LVU104
+ 336 0060 1848     		ldr	r0, .L25+4
+ 337 0062 194B     		ldr	r3, .L25+8
+ 338 0064 0360     		str	r3, [r0]
+  96:Core/Src/spi.c ****     hdma_spi1_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+ 339              		.loc 1 96 5 is_stmt 1 view .LVU105
+  96:Core/Src/spi.c ****     hdma_spi1_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+ 340              		.loc 1 96 31 is_stmt 0 view .LVU106
+ 341 0066 0123     		movs	r3, #1
+ 342 0068 4360     		str	r3, [r0, #4]
+  97:Core/Src/spi.c ****     hdma_spi1_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+ 343              		.loc 1 97 5 is_stmt 1 view .LVU107
+  97:Core/Src/spi.c ****     hdma_spi1_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+ 344              		.loc 1 97 33 is_stmt 0 view .LVU108
+ 345 006a 0023     		movs	r3, #0
+ 346 006c 8360     		str	r3, [r0, #8]
+  98:Core/Src/spi.c ****     hdma_spi1_rx.Init.MemInc = DMA_MINC_ENABLE;
+ 347              		.loc 1 98 5 is_stmt 1 view .LVU109
+  98:Core/Src/spi.c ****     hdma_spi1_rx.Init.MemInc = DMA_MINC_ENABLE;
+ 348              		.loc 1 98 33 is_stmt 0 view .LVU110
+ 349 006e C360     		str	r3, [r0, #12]
+  99:Core/Src/spi.c ****     hdma_spi1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+ 350              		.loc 1 99 5 is_stmt 1 view .LVU111
+  99:Core/Src/spi.c ****     hdma_spi1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+ 351              		.loc 1 99 30 is_stmt 0 view .LVU112
+ 352 0070 8022     		movs	r2, #128
+ 353 0072 0261     		str	r2, [r0, #16]
+ 100:Core/Src/spi.c ****     hdma_spi1_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 14
+
+
+ 354              		.loc 1 100 5 is_stmt 1 view .LVU113
+ 100:Core/Src/spi.c ****     hdma_spi1_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+ 355              		.loc 1 100 43 is_stmt 0 view .LVU114
+ 356 0074 4361     		str	r3, [r0, #20]
+ 101:Core/Src/spi.c ****     hdma_spi1_rx.Init.Mode = DMA_NORMAL;
+ 357              		.loc 1 101 5 is_stmt 1 view .LVU115
+ 101:Core/Src/spi.c ****     hdma_spi1_rx.Init.Mode = DMA_NORMAL;
+ 358              		.loc 1 101 40 is_stmt 0 view .LVU116
+ 359 0076 8361     		str	r3, [r0, #24]
+ 102:Core/Src/spi.c ****     hdma_spi1_rx.Init.Priority = DMA_PRIORITY_LOW;
+ 360              		.loc 1 102 5 is_stmt 1 view .LVU117
+ 102:Core/Src/spi.c ****     hdma_spi1_rx.Init.Priority = DMA_PRIORITY_LOW;
+ 361              		.loc 1 102 28 is_stmt 0 view .LVU118
+ 362 0078 C361     		str	r3, [r0, #28]
+ 103:Core/Src/spi.c ****     if (HAL_DMA_Init(&hdma_spi1_rx) != HAL_OK)
+ 363              		.loc 1 103 5 is_stmt 1 view .LVU119
+ 103:Core/Src/spi.c ****     if (HAL_DMA_Init(&hdma_spi1_rx) != HAL_OK)
+ 364              		.loc 1 103 32 is_stmt 0 view .LVU120
+ 365 007a 0362     		str	r3, [r0, #32]
+ 104:Core/Src/spi.c ****     {
+ 366              		.loc 1 104 5 is_stmt 1 view .LVU121
+ 104:Core/Src/spi.c ****     {
+ 367              		.loc 1 104 9 is_stmt 0 view .LVU122
+ 368 007c FFF7FEFF 		bl	HAL_DMA_Init
+ 369              	.LVL15:
+ 104:Core/Src/spi.c ****     {
+ 370              		.loc 1 104 8 view .LVU123
+ 371 0080 C0B9     		cbnz	r0, .L23
+ 372              	.L19:
+ 109:Core/Src/spi.c **** 
+ 373              		.loc 1 109 5 is_stmt 1 view .LVU124
+ 109:Core/Src/spi.c **** 
+ 374              		.loc 1 109 5 view .LVU125
+ 375 0082 104B     		ldr	r3, .L25+4
+ 376 0084 A365     		str	r3, [r4, #88]
+ 109:Core/Src/spi.c **** 
+ 377              		.loc 1 109 5 view .LVU126
+ 378 0086 9C62     		str	r4, [r3, #40]
+ 109:Core/Src/spi.c **** 
+ 379              		.loc 1 109 5 view .LVU127
+ 112:Core/Src/spi.c ****     hdma_spi1_tx.Init.Request = DMA_REQUEST_1;
+ 380              		.loc 1 112 5 view .LVU128
+ 112:Core/Src/spi.c ****     hdma_spi1_tx.Init.Request = DMA_REQUEST_1;
+ 381              		.loc 1 112 27 is_stmt 0 view .LVU129
+ 382 0088 1048     		ldr	r0, .L25+12
+ 383 008a 114B     		ldr	r3, .L25+16
+ 384 008c 0360     		str	r3, [r0]
+ 113:Core/Src/spi.c ****     hdma_spi1_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
+ 385              		.loc 1 113 5 is_stmt 1 view .LVU130
+ 113:Core/Src/spi.c ****     hdma_spi1_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
+ 386              		.loc 1 113 31 is_stmt 0 view .LVU131
+ 387 008e 0123     		movs	r3, #1
+ 388 0090 4360     		str	r3, [r0, #4]
+ 114:Core/Src/spi.c ****     hdma_spi1_tx.Init.PeriphInc = DMA_PINC_DISABLE;
+ 389              		.loc 1 114 5 is_stmt 1 view .LVU132
+ 114:Core/Src/spi.c ****     hdma_spi1_tx.Init.PeriphInc = DMA_PINC_DISABLE;
+ 390              		.loc 1 114 33 is_stmt 0 view .LVU133
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 15
+
+
+ 391 0092 1023     		movs	r3, #16
+ 392 0094 8360     		str	r3, [r0, #8]
+ 115:Core/Src/spi.c ****     hdma_spi1_tx.Init.MemInc = DMA_MINC_ENABLE;
+ 393              		.loc 1 115 5 is_stmt 1 view .LVU134
+ 115:Core/Src/spi.c ****     hdma_spi1_tx.Init.MemInc = DMA_MINC_ENABLE;
+ 394              		.loc 1 115 33 is_stmt 0 view .LVU135
+ 395 0096 0023     		movs	r3, #0
+ 396 0098 C360     		str	r3, [r0, #12]
+ 116:Core/Src/spi.c ****     hdma_spi1_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+ 397              		.loc 1 116 5 is_stmt 1 view .LVU136
+ 116:Core/Src/spi.c ****     hdma_spi1_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+ 398              		.loc 1 116 30 is_stmt 0 view .LVU137
+ 399 009a 8022     		movs	r2, #128
+ 400 009c 0261     		str	r2, [r0, #16]
+ 117:Core/Src/spi.c ****     hdma_spi1_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+ 401              		.loc 1 117 5 is_stmt 1 view .LVU138
+ 117:Core/Src/spi.c ****     hdma_spi1_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+ 402              		.loc 1 117 43 is_stmt 0 view .LVU139
+ 403 009e 4361     		str	r3, [r0, #20]
+ 118:Core/Src/spi.c ****     hdma_spi1_tx.Init.Mode = DMA_NORMAL;
+ 404              		.loc 1 118 5 is_stmt 1 view .LVU140
+ 118:Core/Src/spi.c ****     hdma_spi1_tx.Init.Mode = DMA_NORMAL;
+ 405              		.loc 1 118 40 is_stmt 0 view .LVU141
+ 406 00a0 8361     		str	r3, [r0, #24]
+ 119:Core/Src/spi.c ****     hdma_spi1_tx.Init.Priority = DMA_PRIORITY_LOW;
+ 407              		.loc 1 119 5 is_stmt 1 view .LVU142
+ 119:Core/Src/spi.c ****     hdma_spi1_tx.Init.Priority = DMA_PRIORITY_LOW;
+ 408              		.loc 1 119 28 is_stmt 0 view .LVU143
+ 409 00a2 C361     		str	r3, [r0, #28]
+ 120:Core/Src/spi.c ****     if (HAL_DMA_Init(&hdma_spi1_tx) != HAL_OK)
+ 410              		.loc 1 120 5 is_stmt 1 view .LVU144
+ 120:Core/Src/spi.c ****     if (HAL_DMA_Init(&hdma_spi1_tx) != HAL_OK)
+ 411              		.loc 1 120 32 is_stmt 0 view .LVU145
+ 412 00a4 0362     		str	r3, [r0, #32]
+ 121:Core/Src/spi.c ****     {
+ 413              		.loc 1 121 5 is_stmt 1 view .LVU146
+ 121:Core/Src/spi.c ****     {
+ 414              		.loc 1 121 9 is_stmt 0 view .LVU147
+ 415 00a6 FFF7FEFF 		bl	HAL_DMA_Init
+ 416              	.LVL16:
+ 121:Core/Src/spi.c ****     {
+ 417              		.loc 1 121 8 view .LVU148
+ 418 00aa 30B9     		cbnz	r0, .L24
+ 419              	.L20:
+ 126:Core/Src/spi.c **** 
+ 420              		.loc 1 126 5 is_stmt 1 view .LVU149
+ 126:Core/Src/spi.c **** 
+ 421              		.loc 1 126 5 view .LVU150
+ 422 00ac 074B     		ldr	r3, .L25+12
+ 423 00ae 6365     		str	r3, [r4, #84]
+ 126:Core/Src/spi.c **** 
+ 424              		.loc 1 126 5 view .LVU151
+ 425 00b0 9C62     		str	r4, [r3, #40]
+ 126:Core/Src/spi.c **** 
+ 426              		.loc 1 126 5 view .LVU152
+ 132:Core/Src/spi.c **** 
+ 427              		.loc 1 132 1 is_stmt 0 view .LVU153
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 16
+
+
+ 428 00b2 B1E7     		b	.L17
+ 429              	.L23:
+ 106:Core/Src/spi.c ****     }
+ 430              		.loc 1 106 7 is_stmt 1 view .LVU154
+ 431 00b4 FFF7FEFF 		bl	Error_Handler
+ 432              	.LVL17:
+ 433 00b8 E3E7     		b	.L19
+ 434              	.L24:
+ 123:Core/Src/spi.c ****     }
+ 435              		.loc 1 123 7 view .LVU155
+ 436 00ba FFF7FEFF 		bl	Error_Handler
+ 437              	.LVL18:
+ 438 00be F5E7     		b	.L20
+ 439              	.L26:
+ 440              		.align	2
+ 441              	.L25:
+ 442 00c0 00300140 		.word	1073819648
+ 443 00c4 00000000 		.word	.LANCHOR4
+ 444 00c8 1C000240 		.word	1073872924
+ 445 00cc 00000000 		.word	.LANCHOR5
+ 446 00d0 30000240 		.word	1073872944
+ 447              		.cfi_endproc
+ 448              	.LFE229:
+ 450              		.section	.text.HAL_SPI_MspDeInit,"ax",%progbits
+ 451              		.align	1
+ 452              		.global	HAL_SPI_MspDeInit
+ 453              		.syntax unified
+ 454              		.thumb
+ 455              		.thumb_func
+ 457              	HAL_SPI_MspDeInit:
+ 458              	.LVL19:
+ 459              	.LFB230:
+ 135:Core/Src/spi.c **** 
+ 460              		.loc 1 135 1 view -0
+ 461              		.cfi_startproc
+ 462              		@ args = 0, pretend = 0, frame = 0
+ 463              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137:Core/Src/spi.c ****   {
+ 464              		.loc 1 137 3 view .LVU157
+ 137:Core/Src/spi.c ****   {
+ 465              		.loc 1 137 15 is_stmt 0 view .LVU158
+ 466 0000 0268     		ldr	r2, [r0]
+ 137:Core/Src/spi.c ****   {
+ 467              		.loc 1 137 5 view .LVU159
+ 468 0002 0B4B     		ldr	r3, .L34
+ 469 0004 9A42     		cmp	r2, r3
+ 470 0006 00D0     		beq	.L33
+ 471 0008 7047     		bx	lr
+ 472              	.L33:
+ 135:Core/Src/spi.c **** 
+ 473              		.loc 1 135 1 view .LVU160
+ 474 000a 10B5     		push	{r4, lr}
+ 475              	.LCFI6:
+ 476              		.cfi_def_cfa_offset 8
+ 477              		.cfi_offset 4, -8
+ 478              		.cfi_offset 14, -4
+ 479 000c 0446     		mov	r4, r0
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 17
+
+
+ 143:Core/Src/spi.c **** 
+ 480              		.loc 1 143 5 is_stmt 1 view .LVU161
+ 481 000e 094A     		ldr	r2, .L34+4
+ 482 0010 136E     		ldr	r3, [r2, #96]
+ 483 0012 23F48053 		bic	r3, r3, #4096
+ 484 0016 1366     		str	r3, [r2, #96]
+ 150:Core/Src/spi.c **** 
+ 485              		.loc 1 150 5 view .LVU162
+ 486 0018 C221     		movs	r1, #194
+ 487 001a 4FF09040 		mov	r0, #1207959552
+ 488              	.LVL20:
+ 150:Core/Src/spi.c **** 
+ 489              		.loc 1 150 5 is_stmt 0 view .LVU163
+ 490 001e FFF7FEFF 		bl	HAL_GPIO_DeInit
+ 491              	.LVL21:
+ 153:Core/Src/spi.c ****     HAL_DMA_DeInit(spiHandle->hdmatx);
+ 492              		.loc 1 153 5 is_stmt 1 view .LVU164
+ 493 0022 A06D     		ldr	r0, [r4, #88]
+ 494 0024 FFF7FEFF 		bl	HAL_DMA_DeInit
+ 495              	.LVL22:
+ 154:Core/Src/spi.c ****   /* USER CODE BEGIN SPI1_MspDeInit 1 */
+ 496              		.loc 1 154 5 view .LVU165
+ 497 0028 606D     		ldr	r0, [r4, #84]
+ 498 002a FFF7FEFF 		bl	HAL_DMA_DeInit
+ 499              	.LVL23:
+ 159:Core/Src/spi.c **** 
+ 500              		.loc 1 159 1 is_stmt 0 view .LVU166
+ 501 002e 10BD     		pop	{r4, pc}
+ 502              	.LVL24:
+ 503              	.L35:
+ 159:Core/Src/spi.c **** 
+ 504              		.loc 1 159 1 view .LVU167
+ 505              		.align	2
+ 506              	.L34:
+ 507 0030 00300140 		.word	1073819648
+ 508 0034 00100240 		.word	1073876992
+ 509              		.cfi_endproc
+ 510              	.LFE230:
+ 512              		.section	.text.SPI1_ReadWriteByte,"ax",%progbits
+ 513              		.align	1
+ 514              		.global	SPI1_ReadWriteByte
+ 515              		.syntax unified
+ 516              		.thumb
+ 517              		.thumb_func
+ 519              	SPI1_ReadWriteByte:
+ 520              	.LVL25:
+ 521              	.LFB231:
+ 172:Core/Src/spi.c ****   uint8_t rxData = 0U;
+ 522              		.loc 1 172 1 is_stmt 1 view -0
+ 523              		.cfi_startproc
+ 524              		@ args = 0, pretend = 0, frame = 16
+ 525              		@ frame_needed = 0, uses_anonymous_args = 0
+ 172:Core/Src/spi.c ****   uint8_t rxData = 0U;
+ 526              		.loc 1 172 1 is_stmt 0 view .LVU169
+ 527 0000 00B5     		push	{lr}
+ 528              	.LCFI7:
+ 529              		.cfi_def_cfa_offset 4
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 18
+
+
+ 530              		.cfi_offset 14, -4
+ 531 0002 87B0     		sub	sp, sp, #28
+ 532              	.LCFI8:
+ 533              		.cfi_def_cfa_offset 32
+ 534 0004 8DF80F00 		strb	r0, [sp, #15]
+ 173:Core/Src/spi.c **** 
+ 535              		.loc 1 173 3 is_stmt 1 view .LVU170
+ 173:Core/Src/spi.c **** 
+ 536              		.loc 1 173 11 is_stmt 0 view .LVU171
+ 537 0008 0023     		movs	r3, #0
+ 538 000a 8DF81730 		strb	r3, [sp, #23]
+ 175:Core/Src/spi.c ****                               HAL_MAX_DELAY) != HAL_OK)
+ 539              		.loc 1 175 3 is_stmt 1 view .LVU172
+ 175:Core/Src/spi.c ****                               HAL_MAX_DELAY) != HAL_OK)
+ 540              		.loc 1 175 7 is_stmt 0 view .LVU173
+ 541 000e 4FF0FF33 		mov	r3, #-1
+ 542 0012 0093     		str	r3, [sp]
+ 543 0014 0123     		movs	r3, #1
+ 544 0016 0DF11702 		add	r2, sp, #23
+ 545 001a 0DF10F01 		add	r1, sp, #15
+ 546 001e 0548     		ldr	r0, .L40
+ 547              	.LVL26:
+ 175:Core/Src/spi.c ****                               HAL_MAX_DELAY) != HAL_OK)
+ 548              		.loc 1 175 7 view .LVU174
+ 549 0020 FFF7FEFF 		bl	HAL_SPI_TransmitReceive
+ 550              	.LVL27:
+ 175:Core/Src/spi.c ****                               HAL_MAX_DELAY) != HAL_OK)
+ 551              		.loc 1 175 6 view .LVU175
+ 552 0024 20B9     		cbnz	r0, .L38
+ 181:Core/Src/spi.c **** }
+ 553              		.loc 1 181 3 is_stmt 1 view .LVU176
+ 181:Core/Src/spi.c **** }
+ 554              		.loc 1 181 10 is_stmt 0 view .LVU177
+ 555 0026 9DF81700 		ldrb	r0, [sp, #23]	@ zero_extendqisi2
+ 556              	.L37:
+ 182:Core/Src/spi.c **** 
+ 557              		.loc 1 182 1 view .LVU178
+ 558 002a 07B0     		add	sp, sp, #28
+ 559              	.LCFI9:
+ 560              		.cfi_remember_state
+ 561              		.cfi_def_cfa_offset 4
+ 562              		@ sp needed
+ 563 002c 5DF804FB 		ldr	pc, [sp], #4
+ 564              	.L38:
+ 565              	.LCFI10:
+ 566              		.cfi_restore_state
+ 178:Core/Src/spi.c ****   }
+ 567              		.loc 1 178 12 view .LVU179
+ 568 0030 0020     		movs	r0, #0
+ 569 0032 FAE7     		b	.L37
+ 570              	.L41:
+ 571              		.align	2
+ 572              	.L40:
+ 573 0034 00000000 		.word	.LANCHOR0
+ 574              		.cfi_endproc
+ 575              	.LFE231:
+ 577              		.section	.text.DMA1_RX,"ax",%progbits
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 19
+
+
+ 578              		.align	1
+ 579              		.global	DMA1_RX
+ 580              		.syntax unified
+ 581              		.thumb
+ 582              		.thumb_func
+ 584              	DMA1_RX:
+ 585              	.LVL28:
+ 586              	.LFB232:
+ 185:Core/Src/spi.c ****   if (buffer == NULL || length == 0U)
+ 587              		.loc 1 185 1 is_stmt 1 view -0
+ 588              		.cfi_startproc
+ 589              		@ args = 0, pretend = 0, frame = 0
+ 590              		@ frame_needed = 0, uses_anonymous_args = 0
+ 186:Core/Src/spi.c ****   {
+ 591              		.loc 1 186 3 view .LVU181
+ 186:Core/Src/spi.c ****   {
+ 592              		.loc 1 186 6 is_stmt 0 view .LVU182
+ 593 0000 98B1     		cbz	r0, .L45
+ 185:Core/Src/spi.c ****   if (buffer == NULL || length == 0U)
+ 594              		.loc 1 185 1 discriminator 1 view .LVU183
+ 595 0002 38B5     		push	{r3, r4, r5, lr}
+ 596              	.LCFI11:
+ 597              		.cfi_def_cfa_offset 16
+ 598              		.cfi_offset 3, -16
+ 599              		.cfi_offset 4, -12
+ 600              		.cfi_offset 5, -8
+ 601              		.cfi_offset 14, -4
+ 602 0004 0C46     		mov	r4, r1
+ 603 0006 0546     		mov	r5, r0
+ 186:Core/Src/spi.c ****   {
+ 604              		.loc 1 186 22 discriminator 1 view .LVU184
+ 605 0008 01B9     		cbnz	r1, .L48
+ 606              	.LVL29:
+ 607              	.L42:
+ 197:Core/Src/spi.c **** 
+ 608              		.loc 1 197 1 view .LVU185
+ 609 000a 38BD     		pop	{r3, r4, r5, pc}
+ 610              	.LVL30:
+ 611              	.L48:
+ 191:Core/Src/spi.c ****   set_fifo_burst();
+ 612              		.loc 1 191 3 is_stmt 1 view .LVU186
+ 613 000c FFF7FEFF 		bl	CS_LOW
+ 614              	.LVL31:
+ 192:Core/Src/spi.c ****   if (HAL_SPI_TransmitReceive_DMA(&hspi1, spiDummyTx, buffer, length) != HAL_OK)
+ 615              		.loc 1 192 3 view .LVU187
+ 616 0010 FFF7FEFF 		bl	set_fifo_burst
+ 617              	.LVL32:
+ 193:Core/Src/spi.c ****   {
+ 618              		.loc 1 193 3 view .LVU188
+ 193:Core/Src/spi.c ****   {
+ 619              		.loc 1 193 7 is_stmt 0 view .LVU189
+ 620 0014 A3B2     		uxth	r3, r4
+ 621 0016 2A46     		mov	r2, r5
+ 622 0018 0449     		ldr	r1, .L49
+ 623 001a 0548     		ldr	r0, .L49+4
+ 624 001c FFF7FEFF 		bl	HAL_SPI_TransmitReceive_DMA
+ 625              	.LVL33:
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 20
+
+
+ 193:Core/Src/spi.c ****   {
+ 626              		.loc 1 193 6 view .LVU190
+ 627 0020 0028     		cmp	r0, #0
+ 628 0022 F2D0     		beq	.L42
+ 195:Core/Src/spi.c ****   }
+ 629              		.loc 1 195 5 is_stmt 1 view .LVU191
+ 630 0024 FFF7FEFF 		bl	CS_HIGH
+ 631              	.LVL34:
+ 632 0028 EFE7     		b	.L42
+ 633              	.LVL35:
+ 634              	.L45:
+ 635              	.LCFI12:
+ 636              		.cfi_def_cfa_offset 0
+ 637              		.cfi_restore 3
+ 638              		.cfi_restore 4
+ 639              		.cfi_restore 5
+ 640              		.cfi_restore 14
+ 195:Core/Src/spi.c ****   }
+ 641              		.loc 1 195 5 is_stmt 0 view .LVU192
+ 642 002a 7047     		bx	lr
+ 643              	.L50:
+ 644              		.align	2
+ 645              	.L49:
+ 646 002c 00000000 		.word	spiDummyTx
+ 647 0030 00000000 		.word	.LANCHOR0
+ 648              		.cfi_endproc
+ 649              	.LFE232:
+ 651              		.section	.text.DMA1_SendtoUart,"ax",%progbits
+ 652              		.align	1
+ 653              		.global	DMA1_SendtoUart
+ 654              		.syntax unified
+ 655              		.thumb
+ 656              		.thumb_func
+ 658              	DMA1_SendtoUart:
+ 659              	.LVL36:
+ 660              	.LFB233:
+ 200:Core/Src/spi.c ****   if (buffer != NULL && length > 0U)
+ 661              		.loc 1 200 1 is_stmt 1 view -0
+ 662              		.cfi_startproc
+ 663              		@ args = 0, pretend = 0, frame = 0
+ 664              		@ frame_needed = 0, uses_anonymous_args = 0
+ 201:Core/Src/spi.c ****   {
+ 665              		.loc 1 201 3 view .LVU194
+ 201:Core/Src/spi.c ****   {
+ 666              		.loc 1 201 6 is_stmt 0 view .LVU195
+ 667 0000 40B1     		cbz	r0, .L54
+ 200:Core/Src/spi.c ****   if (buffer != NULL && length > 0U)
+ 668              		.loc 1 200 1 discriminator 1 view .LVU196
+ 669 0002 08B5     		push	{r3, lr}
+ 670              	.LCFI13:
+ 671              		.cfi_def_cfa_offset 8
+ 672              		.cfi_offset 3, -8
+ 673              		.cfi_offset 14, -4
+ 201:Core/Src/spi.c ****   {
+ 674              		.loc 1 201 22 discriminator 1 view .LVU197
+ 675 0004 01B9     		cbnz	r1, .L57
+ 676              	.LVL37:
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 21
+
+
+ 677              	.L51:
+ 205:Core/Src/spi.c **** 
+ 678              		.loc 1 205 1 view .LVU198
+ 679 0006 08BD     		pop	{r3, pc}
+ 680              	.LVL38:
+ 681              	.L57:
+ 203:Core/Src/spi.c ****   }
+ 682              		.loc 1 203 5 is_stmt 1 view .LVU199
+ 203:Core/Src/spi.c ****   }
+ 683              		.loc 1 203 11 is_stmt 0 view .LVU200
+ 684 0008 8AB2     		uxth	r2, r1
+ 685 000a 0146     		mov	r1, r0
+ 686              	.LVL39:
+ 203:Core/Src/spi.c ****   }
+ 687              		.loc 1 203 11 view .LVU201
+ 688 000c 0248     		ldr	r0, .L58
+ 689              	.LVL40:
+ 203:Core/Src/spi.c ****   }
+ 690              		.loc 1 203 11 view .LVU202
+ 691 000e FFF7FEFF 		bl	HAL_UART_Transmit_DMA
+ 692              	.LVL41:
+ 205:Core/Src/spi.c **** 
+ 693              		.loc 1 205 1 view .LVU203
+ 694 0012 F8E7     		b	.L51
+ 695              	.LVL42:
+ 696              	.L54:
+ 697              	.LCFI14:
+ 698              		.cfi_def_cfa_offset 0
+ 699              		.cfi_restore 3
+ 700              		.cfi_restore 14
+ 205:Core/Src/spi.c **** 
+ 701              		.loc 1 205 1 view .LVU204
+ 702 0014 7047     		bx	lr
+ 703              	.L59:
+ 704 0016 00BF     		.align	2
+ 705              	.L58:
+ 706 0018 00000000 		.word	huart4
+ 707              		.cfi_endproc
+ 708              	.LFE233:
+ 710              		.section	.text.SendImageToESP,"ax",%progbits
+ 711              		.align	1
+ 712              		.global	SendImageToESP
+ 713              		.syntax unified
+ 714              		.thumb
+ 715              		.thumb_func
+ 717              	SendImageToESP:
+ 718              	.LVL43:
+ 719              	.LFB234:
+ 208:Core/Src/spi.c ****   static const uint8_t imageHeader[3] = {'I', 'M', 'G'};
+ 720              		.loc 1 208 1 is_stmt 1 view -0
+ 721              		.cfi_startproc
+ 722              		@ args = 0, pretend = 0, frame = 0
+ 723              		@ frame_needed = 0, uses_anonymous_args = 0
+ 209:Core/Src/spi.c **** 
+ 724              		.loc 1 209 3 view .LVU206
+ 211:Core/Src/spi.c ****   {
+ 725              		.loc 1 211 3 view .LVU207
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 22
+
+
+ 211:Core/Src/spi.c ****   {
+ 726              		.loc 1 211 6 is_stmt 0 view .LVU208
+ 727 0000 D0B1     		cbz	r0, .L62
+ 208:Core/Src/spi.c ****   static const uint8_t imageHeader[3] = {'I', 'M', 'G'};
+ 728              		.loc 1 208 1 discriminator 1 view .LVU209
+ 729 0002 38B5     		push	{r3, r4, r5, lr}
+ 730              	.LCFI15:
+ 731              		.cfi_def_cfa_offset 16
+ 732              		.cfi_offset 3, -16
+ 733              		.cfi_offset 4, -12
+ 734              		.cfi_offset 5, -8
+ 735              		.cfi_offset 14, -4
+ 736 0004 0C46     		mov	r4, r1
+ 737 0006 0546     		mov	r5, r0
+ 211:Core/Src/spi.c ****   {
+ 738              		.loc 1 211 22 discriminator 1 view .LVU210
+ 739 0008 09B9     		cbnz	r1, .L69
+ 213:Core/Src/spi.c ****   }
+ 740              		.loc 1 213 12 view .LVU211
+ 741 000a 0020     		movs	r0, #0
+ 742              	.LVL44:
+ 743              	.L61:
+ 224:Core/Src/spi.c **** 
+ 744              		.loc 1 224 1 view .LVU212
+ 745 000c 38BD     		pop	{r3, r4, r5, pc}
+ 746              	.LVL45:
+ 747              	.L69:
+ 216:Core/Src/spi.c ****                         sizeof(imageHeader), HAL_MAX_DELAY) != HAL_OK)
+ 748              		.loc 1 216 3 is_stmt 1 view .LVU213
+ 216:Core/Src/spi.c ****                         sizeof(imageHeader), HAL_MAX_DELAY) != HAL_OK)
+ 749              		.loc 1 216 7 is_stmt 0 view .LVU214
+ 750 000e 4FF0FF33 		mov	r3, #-1
+ 751 0012 0322     		movs	r2, #3
+ 752 0014 0949     		ldr	r1, .L71
+ 753              	.LVL46:
+ 216:Core/Src/spi.c ****                         sizeof(imageHeader), HAL_MAX_DELAY) != HAL_OK)
+ 754              		.loc 1 216 7 view .LVU215
+ 755 0016 0A48     		ldr	r0, .L71+4
+ 756              	.LVL47:
+ 216:Core/Src/spi.c ****                         sizeof(imageHeader), HAL_MAX_DELAY) != HAL_OK)
+ 757              		.loc 1 216 7 view .LVU216
+ 758 0018 FFF7FEFF 		bl	HAL_UART_Transmit
+ 759              	.LVL48:
+ 216:Core/Src/spi.c ****                         sizeof(imageHeader), HAL_MAX_DELAY) != HAL_OK)
+ 760              		.loc 1 216 6 view .LVU217
+ 761 001c 08B1     		cbz	r0, .L70
+ 219:Core/Src/spi.c ****   }
+ 762              		.loc 1 219 12 view .LVU218
+ 763 001e 0020     		movs	r0, #0
+ 764 0020 F4E7     		b	.L61
+ 765              	.L70:
+ 222:Core/Src/spi.c ****                            HAL_MAX_DELAY) == HAL_OK;
+ 766              		.loc 1 222 3 is_stmt 1 view .LVU219
+ 222:Core/Src/spi.c ****                            HAL_MAX_DELAY) == HAL_OK;
+ 767              		.loc 1 222 10 is_stmt 0 view .LVU220
+ 768 0022 4FF0FF33 		mov	r3, #-1
+ 769 0026 A2B2     		uxth	r2, r4
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 23
+
+
+ 770 0028 2946     		mov	r1, r5
+ 771 002a 0548     		ldr	r0, .L71+4
+ 772 002c FFF7FEFF 		bl	HAL_UART_Transmit
+ 773              	.LVL49:
+ 223:Core/Src/spi.c **** }
+ 774              		.loc 1 223 43 view .LVU221
+ 775 0030 B0FA80F0 		clz	r0, r0
+ 776 0034 4009     		lsrs	r0, r0, #5
+ 777 0036 E9E7     		b	.L61
+ 778              	.LVL50:
+ 779              	.L62:
+ 780              	.LCFI16:
+ 781              		.cfi_def_cfa_offset 0
+ 782              		.cfi_restore 3
+ 783              		.cfi_restore 4
+ 784              		.cfi_restore 5
+ 785              		.cfi_restore 14
+ 213:Core/Src/spi.c ****   }
+ 786              		.loc 1 213 12 view .LVU222
+ 787 0038 0020     		movs	r0, #0
+ 788              	.LVL51:
+ 224:Core/Src/spi.c **** 
+ 789              		.loc 1 224 1 view .LVU223
+ 790 003a 7047     		bx	lr
+ 791              	.L72:
+ 792              		.align	2
+ 793              	.L71:
+ 794 003c 00000000 		.word	.LANCHOR6
+ 795 0040 00000000 		.word	huart4
+ 796              		.cfi_endproc
+ 797              	.LFE234:
+ 799              		.section	.text.SendBufferAsHex,"ax",%progbits
+ 800              		.align	1
+ 801              		.global	SendBufferAsHex
+ 802              		.syntax unified
+ 803              		.thumb
+ 804              		.thumb_func
+ 806              	SendBufferAsHex:
+ 807              	.LVL52:
+ 808              	.LFB235:
+ 227:Core/Src/spi.c ****   static const char hexDigits[] = "0123456789ABCDEF";
+ 809              		.loc 1 227 1 is_stmt 1 view -0
+ 810              		.cfi_startproc
+ 811              		@ args = 0, pretend = 0, frame = 8
+ 812              		@ frame_needed = 0, uses_anonymous_args = 0
+ 227:Core/Src/spi.c ****   static const char hexDigits[] = "0123456789ABCDEF";
+ 813              		.loc 1 227 1 is_stmt 0 view .LVU225
+ 814 0000 70B5     		push	{r4, r5, r6, lr}
+ 815              	.LCFI17:
+ 816              		.cfi_def_cfa_offset 16
+ 817              		.cfi_offset 4, -16
+ 818              		.cfi_offset 5, -12
+ 819              		.cfi_offset 6, -8
+ 820              		.cfi_offset 14, -4
+ 821 0002 82B0     		sub	sp, sp, #8
+ 822              	.LCFI18:
+ 823              		.cfi_def_cfa_offset 24
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 24
+
+
+ 824 0004 0646     		mov	r6, r0
+ 825 0006 0D46     		mov	r5, r1
+ 228:Core/Src/spi.c ****   uint8_t output[3] = {0U, 0U, ' '};
+ 826              		.loc 1 228 3 is_stmt 1 view .LVU226
+ 229:Core/Src/spi.c ****   uint8_t newline = '\n';
+ 827              		.loc 1 229 3 view .LVU227
+ 229:Core/Src/spi.c ****   uint8_t newline = '\n';
+ 828              		.loc 1 229 11 is_stmt 0 view .LVU228
+ 829 0008 154B     		ldr	r3, .L77
+ 830 000a 1B68     		ldr	r3, [r3]
+ 831 000c ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 832 0010 1B0C     		lsrs	r3, r3, #16
+ 833 0012 8DF80630 		strb	r3, [sp, #6]
+ 230:Core/Src/spi.c **** 
+ 834              		.loc 1 230 3 is_stmt 1 view .LVU229
+ 230:Core/Src/spi.c **** 
+ 835              		.loc 1 230 11 is_stmt 0 view .LVU230
+ 836 0016 0A23     		movs	r3, #10
+ 837 0018 8DF80330 		strb	r3, [sp, #3]
+ 232:Core/Src/spi.c ****   {
+ 838              		.loc 1 232 3 is_stmt 1 view .LVU231
+ 839              	.LBB6:
+ 232:Core/Src/spi.c ****   {
+ 840              		.loc 1 232 8 view .LVU232
+ 841              	.LVL53:
+ 232:Core/Src/spi.c ****   {
+ 842              		.loc 1 232 17 is_stmt 0 view .LVU233
+ 843 001c 0024     		movs	r4, #0
+ 232:Core/Src/spi.c ****   {
+ 844              		.loc 1 232 3 view .LVU234
+ 845 001e 13E0     		b	.L74
+ 846              	.LVL54:
+ 847              	.L75:
+ 234:Core/Src/spi.c ****     output[1] = (uint8_t)hexDigits[buffer[i] & 0x0FU];
+ 848              		.loc 1 234 5 is_stmt 1 discriminator 3 view .LVU235
+ 234:Core/Src/spi.c ****     output[1] = (uint8_t)hexDigits[buffer[i] & 0x0FU];
+ 849              		.loc 1 234 42 is_stmt 0 discriminator 3 view .LVU236
+ 850 0020 335D     		ldrb	r3, [r6, r4]	@ zero_extendqisi2
+ 234:Core/Src/spi.c ****     output[1] = (uint8_t)hexDigits[buffer[i] & 0x0FU];
+ 851              		.loc 1 234 46 discriminator 3 view .LVU237
+ 852 0022 1909     		lsrs	r1, r3, #4
+ 234:Core/Src/spi.c ****     output[1] = (uint8_t)hexDigits[buffer[i] & 0x0FU];
+ 853              		.loc 1 234 35 discriminator 3 view .LVU238
+ 854 0024 0F4A     		ldr	r2, .L77+4
+ 855 0026 12F801C0 		ldrb	ip, [r2, r1]	@ zero_extendqisi2
+ 234:Core/Src/spi.c ****     output[1] = (uint8_t)hexDigits[buffer[i] & 0x0FU];
+ 856              		.loc 1 234 15 discriminator 3 view .LVU239
+ 857 002a 8DF804C0 		strb	ip, [sp, #4]
+ 235:Core/Src/spi.c ****     (void)HAL_UART_Transmit(&huart4, output, sizeof(output), HAL_MAX_DELAY);
+ 858              		.loc 1 235 5 is_stmt 1 discriminator 3 view .LVU240
+ 235:Core/Src/spi.c ****     (void)HAL_UART_Transmit(&huart4, output, sizeof(output), HAL_MAX_DELAY);
+ 859              		.loc 1 235 46 is_stmt 0 discriminator 3 view .LVU241
+ 860 002e 03F00F03 		and	r3, r3, #15
+ 235:Core/Src/spi.c ****     (void)HAL_UART_Transmit(&huart4, output, sizeof(output), HAL_MAX_DELAY);
+ 861              		.loc 1 235 35 discriminator 3 view .LVU242
+ 862 0032 D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
+ 235:Core/Src/spi.c ****     (void)HAL_UART_Transmit(&huart4, output, sizeof(output), HAL_MAX_DELAY);
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 25
+
+
+ 863              		.loc 1 235 15 discriminator 3 view .LVU243
+ 864 0034 8DF80530 		strb	r3, [sp, #5]
+ 236:Core/Src/spi.c ****   }
+ 865              		.loc 1 236 5 is_stmt 1 discriminator 3 view .LVU244
+ 236:Core/Src/spi.c ****   }
+ 866              		.loc 1 236 11 is_stmt 0 discriminator 3 view .LVU245
+ 867 0038 4FF0FF33 		mov	r3, #-1
+ 868 003c 0322     		movs	r2, #3
+ 869 003e 01A9     		add	r1, sp, #4
+ 870 0040 0948     		ldr	r0, .L77+8
+ 871 0042 FFF7FEFF 		bl	HAL_UART_Transmit
+ 872              	.LVL55:
+ 232:Core/Src/spi.c ****   {
+ 873              		.loc 1 232 37 is_stmt 1 discriminator 3 view .LVU246
+ 232:Core/Src/spi.c ****   {
+ 874              		.loc 1 232 38 is_stmt 0 discriminator 3 view .LVU247
+ 875 0046 0134     		adds	r4, r4, #1
+ 876              	.LVL56:
+ 877              	.L74:
+ 232:Core/Src/spi.c ****   {
+ 878              		.loc 1 232 25 is_stmt 1 discriminator 1 view .LVU248
+ 232:Core/Src/spi.c ****   {
+ 879              		.loc 1 232 3 is_stmt 0 discriminator 1 view .LVU249
+ 880 0048 AC42     		cmp	r4, r5
+ 881 004a E9D3     		bcc	.L75
+ 882              	.LBE6:
+ 238:Core/Src/spi.c **** }
+ 883              		.loc 1 238 3 is_stmt 1 view .LVU250
+ 238:Core/Src/spi.c **** }
+ 884              		.loc 1 238 9 is_stmt 0 view .LVU251
+ 885 004c 4FF0FF33 		mov	r3, #-1
+ 886 0050 0122     		movs	r2, #1
+ 887 0052 0DF10301 		add	r1, sp, #3
+ 888 0056 0448     		ldr	r0, .L77+8
+ 889 0058 FFF7FEFF 		bl	HAL_UART_Transmit
+ 890              	.LVL57:
+ 239:Core/Src/spi.c **** 
+ 891              		.loc 1 239 1 view .LVU252
+ 892 005c 02B0     		add	sp, sp, #8
+ 893              	.LCFI19:
+ 894              		.cfi_def_cfa_offset 16
+ 895              		@ sp needed
+ 896 005e 70BD     		pop	{r4, r5, r6, pc}
+ 897              	.LVL58:
+ 898              	.L78:
+ 239:Core/Src/spi.c **** 
+ 899              		.loc 1 239 1 view .LVU253
+ 900              		.align	2
+ 901              	.L77:
+ 902 0060 00000000 		.word	.LANCHOR7
+ 903 0064 00000000 		.word	.LANCHOR8
+ 904 0068 00000000 		.word	huart4
+ 905              		.cfi_endproc
+ 906              	.LFE235:
+ 908              		.section	.text.SingleCapTransfer,"ax",%progbits
+ 909              		.align	1
+ 910              		.global	SingleCapTransfer
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 26
+
+
+ 911              		.syntax unified
+ 912              		.thumb
+ 913              		.thumb_func
+ 915              	SingleCapTransfer:
+ 916              	.LFB236:
+ 242:Core/Src/spi.c ****   uint32_t length;
+ 917              		.loc 1 242 1 is_stmt 1 view -0
+ 918              		.cfi_startproc
+ 919              		@ args = 0, pretend = 0, frame = 0
+ 920              		@ frame_needed = 0, uses_anonymous_args = 0
+ 921 0000 08B5     		push	{r3, lr}
+ 922              	.LCFI20:
+ 923              		.cfi_def_cfa_offset 8
+ 924              		.cfi_offset 3, -8
+ 925              		.cfi_offset 14, -4
+ 243:Core/Src/spi.c **** 
+ 926              		.loc 1 243 3 view .LVU255
+ 245:Core/Src/spi.c ****   clear_fifo_flag();
+ 927              		.loc 1 245 3 view .LVU256
+ 928 0002 FFF7FEFF 		bl	flush_fifo
+ 929              	.LVL59:
+ 246:Core/Src/spi.c ****   start_capture();
+ 930              		.loc 1 246 3 view .LVU257
+ 931 0006 FFF7FEFF 		bl	clear_fifo_flag
+ 932              	.LVL60:
+ 247:Core/Src/spi.c ****   while (get_bit(ARDUCHIP_TRIG, CAP_DONE_MASK) == 0U)
+ 933              		.loc 1 247 3 view .LVU258
+ 934 000a FFF7FEFF 		bl	start_capture
+ 935              	.LVL61:
+ 248:Core/Src/spi.c ****   {
+ 936              		.loc 1 248 3 view .LVU259
+ 937              	.L80:
+ 250:Core/Src/spi.c **** 
+ 938              		.loc 1 250 3 discriminator 1 view .LVU260
+ 248:Core/Src/spi.c ****   {
+ 939              		.loc 1 248 9 discriminator 1 view .LVU261
+ 248:Core/Src/spi.c ****   {
+ 940              		.loc 1 248 10 is_stmt 0 discriminator 1 view .LVU262
+ 941 000e 0821     		movs	r1, #8
+ 942 0010 4120     		movs	r0, #65
+ 943 0012 FFF7FEFF 		bl	get_bit
+ 944              	.LVL62:
+ 248:Core/Src/spi.c ****   {
+ 945              		.loc 1 248 9 discriminator 1 view .LVU263
+ 946 0016 0028     		cmp	r0, #0
+ 947 0018 F9D0     		beq	.L80
+ 252:Core/Src/spi.c ****   /*
+ 948              		.loc 1 252 3 is_stmt 1 view .LVU264
+ 252:Core/Src/spi.c ****   /*
+ 949              		.loc 1 252 12 is_stmt 0 view .LVU265
+ 950 001a FFF7FEFF 		bl	read_fifo_length
+ 951              	.LVL63:
+ 257:Core/Src/spi.c ****               ? length : (BUFFER_MAX_SIZE - 1U);
+ 952              		.loc 1 257 3 is_stmt 1 view .LVU266
+ 258:Core/Src/spi.c ****   picbuf = &buf1[1];
+ 953              		.loc 1 258 24 is_stmt 0 view .LVU267
+ 954 001e 47F6FF73 		movw	r3, #32767
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 27
+
+
+ 955 0022 9842     		cmp	r0, r3
+ 956 0024 28BF     		it	cs
+ 957 0026 1846     		movcs	r0, r3
+ 958              	.LVL64:
+ 257:Core/Src/spi.c ****               ? length : (BUFFER_MAX_SIZE - 1U);
+ 959              		.loc 1 257 11 view .LVU268
+ 960 0028 074B     		ldr	r3, .L82
+ 961 002a 1860     		str	r0, [r3]
+ 259:Core/Src/spi.c ****   receive_OK = false;
+ 962              		.loc 1 259 3 is_stmt 1 view .LVU269
+ 259:Core/Src/spi.c ****   receive_OK = false;
+ 963              		.loc 1 259 10 is_stmt 0 view .LVU270
+ 964 002c 0748     		ldr	r0, .L82+4
+ 965 002e 084A     		ldr	r2, .L82+8
+ 966 0030 1060     		str	r0, [r2]
+ 260:Core/Src/spi.c ****   jpeglen = 0U;
+ 967              		.loc 1 260 3 is_stmt 1 view .LVU271
+ 260:Core/Src/spi.c ****   jpeglen = 0U;
+ 968              		.loc 1 260 14 is_stmt 0 view .LVU272
+ 969 0032 0022     		movs	r2, #0
+ 970 0034 0749     		ldr	r1, .L82+12
+ 971 0036 0A70     		strb	r2, [r1]
+ 261:Core/Src/spi.c ****   DMA1_RX(picbuf, sendlen + 1U);
+ 972              		.loc 1 261 3 is_stmt 1 view .LVU273
+ 261:Core/Src/spi.c ****   DMA1_RX(picbuf, sendlen + 1U);
+ 973              		.loc 1 261 11 is_stmt 0 view .LVU274
+ 974 0038 0749     		ldr	r1, .L82+16
+ 975 003a 0A60     		str	r2, [r1]
+ 262:Core/Src/spi.c **** }
+ 976              		.loc 1 262 3 is_stmt 1 view .LVU275
+ 977 003c 1968     		ldr	r1, [r3]
+ 978 003e 0131     		adds	r1, r1, #1
+ 979 0040 FFF7FEFF 		bl	DMA1_RX
+ 980              	.LVL65:
+ 263:Core/Src/spi.c **** 
+ 981              		.loc 1 263 1 is_stmt 0 view .LVU276
+ 982 0044 08BD     		pop	{r3, pc}
+ 983              	.L83:
+ 984 0046 00BF     		.align	2
+ 985              	.L82:
+ 986 0048 00000000 		.word	.LANCHOR2
+ 987 004c 01000000 		.word	buf1+1
+ 988 0050 00000000 		.word	.LANCHOR9
+ 989 0054 00000000 		.word	.LANCHOR1
+ 990 0058 00000000 		.word	.LANCHOR3
+ 991              		.cfi_endproc
+ 992              	.LFE236:
+ 994              		.section	.text.HAL_SPI_TxRxCpltCallback,"ax",%progbits
+ 995              		.align	1
+ 996              		.global	HAL_SPI_TxRxCpltCallback
+ 997              		.syntax unified
+ 998              		.thumb
+ 999              		.thumb_func
+ 1001              	HAL_SPI_TxRxCpltCallback:
+ 1002              	.LVL66:
+ 1003              	.LFB238:
+ 286:Core/Src/spi.c **** 
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 28
+
+
+ 287:Core/Src/spi.c **** void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *spiHandle)
+ 288:Core/Src/spi.c **** {
+ 1004              		.loc 1 288 1 is_stmt 1 view -0
+ 1005              		.cfi_startproc
+ 1006              		@ args = 0, pretend = 0, frame = 0
+ 1007              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1008              		.loc 1 288 1 is_stmt 0 view .LVU278
+ 1009 0000 08B5     		push	{r3, lr}
+ 1010              	.LCFI21:
+ 1011              		.cfi_def_cfa_offset 8
+ 1012              		.cfi_offset 3, -8
+ 1013              		.cfi_offset 14, -4
+ 289:Core/Src/spi.c ****   CameraDmaComplete(spiHandle);
+ 1014              		.loc 1 289 3 is_stmt 1 view .LVU279
+ 1015 0002 FFF7FEFF 		bl	CameraDmaComplete
+ 1016              	.LVL67:
+ 290:Core/Src/spi.c **** }
+ 1017              		.loc 1 290 1 is_stmt 0 view .LVU280
+ 1018 0006 08BD     		pop	{r3, pc}
+ 1019              		.cfi_endproc
+ 1020              	.LFE238:
+ 1022              		.section	.text.HAL_SPI_RxCpltCallback,"ax",%progbits
+ 1023              		.align	1
+ 1024              		.global	HAL_SPI_RxCpltCallback
+ 1025              		.syntax unified
+ 1026              		.thumb
+ 1027              		.thumb_func
+ 1029              	HAL_SPI_RxCpltCallback:
+ 1030              	.LVL68:
+ 1031              	.LFB239:
+ 291:Core/Src/spi.c **** 
+ 292:Core/Src/spi.c **** void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *spiHandle)
+ 293:Core/Src/spi.c **** {
+ 1032              		.loc 1 293 1 is_stmt 1 view -0
+ 1033              		.cfi_startproc
+ 1034              		@ args = 0, pretend = 0, frame = 0
+ 1035              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1036              		.loc 1 293 1 is_stmt 0 view .LVU282
+ 1037 0000 08B5     		push	{r3, lr}
+ 1038              	.LCFI22:
+ 1039              		.cfi_def_cfa_offset 8
+ 1040              		.cfi_offset 3, -8
+ 1041              		.cfi_offset 14, -4
+ 294:Core/Src/spi.c ****   CameraDmaComplete(spiHandle);
+ 1042              		.loc 1 294 3 is_stmt 1 view .LVU283
+ 1043 0002 FFF7FEFF 		bl	CameraDmaComplete
+ 1044              	.LVL69:
+ 295:Core/Src/spi.c **** }
+ 1045              		.loc 1 295 1 is_stmt 0 view .LVU284
+ 1046 0006 08BD     		pop	{r3, pc}
+ 1047              		.cfi_endproc
+ 1048              	.LFE239:
+ 1050              		.section	.text.HAL_UART_TxCpltCallback,"ax",%progbits
+ 1051              		.align	1
+ 1052              		.global	HAL_UART_TxCpltCallback
+ 1053              		.syntax unified
+ 1054              		.thumb
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 29
+
+
+ 1055              		.thumb_func
+ 1057              	HAL_UART_TxCpltCallback:
+ 1058              	.LVL70:
+ 1059              	.LFB240:
+ 296:Core/Src/spi.c **** 
+ 297:Core/Src/spi.c **** void HAL_UART_TxCpltCallback(UART_HandleTypeDef *uartHandle)
+ 298:Core/Src/spi.c **** {
+ 1060              		.loc 1 298 1 is_stmt 1 view -0
+ 1061              		.cfi_startproc
+ 1062              		@ args = 0, pretend = 0, frame = 0
+ 1063              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1064              		@ link register save eliminated.
+ 299:Core/Src/spi.c ****   if (uartHandle == &huart4)
+ 1065              		.loc 1 299 3 view .LVU286
+ 1066              		.loc 1 299 6 is_stmt 0 view .LVU287
+ 1067 0000 034B     		ldr	r3, .L91
+ 1068 0002 8342     		cmp	r3, r0
+ 1069 0004 00D0     		beq	.L90
+ 1070              	.L88:
+ 300:Core/Src/spi.c ****   {
+ 301:Core/Src/spi.c ****     send_OK = true;
+ 302:Core/Src/spi.c ****   }
+ 303:Core/Src/spi.c **** }
+ 1071              		.loc 1 303 1 view .LVU288
+ 1072 0006 7047     		bx	lr
+ 1073              	.L90:
+ 301:Core/Src/spi.c ****   }
+ 1074              		.loc 1 301 5 is_stmt 1 view .LVU289
+ 301:Core/Src/spi.c ****   }
+ 1075              		.loc 1 301 13 is_stmt 0 view .LVU290
+ 1076 0008 024B     		ldr	r3, .L91+4
+ 1077 000a 0122     		movs	r2, #1
+ 1078 000c 1A70     		strb	r2, [r3]
+ 1079              		.loc 1 303 1 view .LVU291
+ 1080 000e FAE7     		b	.L88
+ 1081              	.L92:
+ 1082              		.align	2
+ 1083              	.L91:
+ 1084 0010 00000000 		.word	huart4
+ 1085 0014 00000000 		.word	.LANCHOR10
+ 1086              		.cfi_endproc
+ 1087              	.LFE240:
+ 1089              		.global	jpeglen
+ 1090              		.global	sendlen
+ 1091              		.global	send_OK
+ 1092              		.global	receive_OK
+ 1093              		.global	picbuf
+ 1094              		.global	hdma_spi1_tx
+ 1095              		.global	hdma_spi1_rx
+ 1096              		.global	hspi1
+ 1097              		.section	.rodata
+ 1098              		.align	2
+ 1099              		.set	.LANCHOR7,. + 0
+ 1100              	.LC0:
+ 1101 0000 000020   		.ascii	"\000\000 "
+ 1102              		.section	.bss.buf1,"aw",%nobits
+ 1103              		.align	2
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 30
+
+
+ 1106              	buf1:
+ 1107 0000 00000000 		.space	32768
+ 1107      00000000 
+ 1107      00000000 
+ 1107      00000000 
+ 1107      00000000 
+ 1108              		.section	.bss.hdma_spi1_rx,"aw",%nobits
+ 1109              		.align	2
+ 1110              		.set	.LANCHOR4,. + 0
+ 1113              	hdma_spi1_rx:
+ 1114 0000 00000000 		.space	72
+ 1114      00000000 
+ 1114      00000000 
+ 1114      00000000 
+ 1114      00000000 
+ 1115              		.section	.bss.hdma_spi1_tx,"aw",%nobits
+ 1116              		.align	2
+ 1117              		.set	.LANCHOR5,. + 0
+ 1120              	hdma_spi1_tx:
+ 1121 0000 00000000 		.space	72
+ 1121      00000000 
+ 1121      00000000 
+ 1121      00000000 
+ 1121      00000000 
+ 1122              		.section	.bss.hspi1,"aw",%nobits
+ 1123              		.align	2
+ 1124              		.set	.LANCHOR0,. + 0
+ 1127              	hspi1:
+ 1128 0000 00000000 		.space	100
+ 1128      00000000 
+ 1128      00000000 
+ 1128      00000000 
+ 1128      00000000 
+ 1129              		.section	.bss.jpeglen,"aw",%nobits
+ 1130              		.align	2
+ 1131              		.set	.LANCHOR3,. + 0
+ 1134              	jpeglen:
+ 1135 0000 00000000 		.space	4
+ 1136              		.section	.bss.picbuf,"aw",%nobits
+ 1137              		.align	2
+ 1138              		.set	.LANCHOR9,. + 0
+ 1141              	picbuf:
+ 1142 0000 00000000 		.space	4
+ 1143              		.section	.bss.receive_OK,"aw",%nobits
+ 1144              		.set	.LANCHOR1,. + 0
+ 1147              	receive_OK:
+ 1148 0000 00       		.space	1
+ 1149              		.section	.bss.sendlen,"aw",%nobits
+ 1150              		.align	2
+ 1151              		.set	.LANCHOR2,. + 0
+ 1154              	sendlen:
+ 1155 0000 00000000 		.space	4
+ 1156              		.section	.bss.spiDummyTx,"aw",%nobits
+ 1157              		.align	2
+ 1160              	spiDummyTx:
+ 1161 0000 00000000 		.space	32768
+ 1161      00000000 
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 31
+
+
+ 1161      00000000 
+ 1161      00000000 
+ 1161      00000000 
+ 1162              		.section	.data.send_OK,"aw"
+ 1163              		.set	.LANCHOR10,. + 0
+ 1166              	send_OK:
+ 1167 0000 01       		.byte	1
+ 1168              		.section	.rodata.hexDigits.0,"a"
+ 1169              		.align	2
+ 1170              		.set	.LANCHOR8,. + 0
+ 1173              	hexDigits.0:
+ 1174 0000 30313233 		.ascii	"0123456789ABCDEF\000"
+ 1174      34353637 
+ 1174      38394142 
+ 1174      43444546 
+ 1174      00
+ 1175              		.section	.rodata.imageHeader.1,"a"
+ 1176              		.align	2
+ 1177              		.set	.LANCHOR6,. + 0
+ 1180              	imageHeader.1:
+ 1181 0000 494D47   		.ascii	"IMG"
+ 1182              		.text
+ 1183              	.Letext0:
+ 1184              		.file 2 "c:\\programdata\\chocolatey\\lib\\gcc-arm-embedded\\tools\\gcc-arm-none-eabi-10.3-2021.10
+ 1185              		.file 3 "c:\\programdata\\chocolatey\\lib\\gcc-arm-embedded\\tools\\gcc-arm-none-eabi-10.3-2021.10
+ 1186              		.file 4 "Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l452xx.h"
+ 1187              		.file 5 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 1188              		.file 6 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h"
+ 1189              		.file 7 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 1190              		.file 8 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi.h"
+ 1191              		.file 9 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h"
+ 1192              		.file 10 "Core/Inc/spi.h"
+ 1193              		.file 11 "Core/Inc/usart.h"
+ 1194              		.file 12 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_dma.h"
+ 1195              		.file 13 "Core/Inc/ArduCAM.h"
+ 1196              		.file 14 "Core/Inc/main.h"
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 32
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 spi.c
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:20     .text.CameraDmaComplete:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:25     .text.CameraDmaComplete:00000000 CameraDmaComplete
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:127    .text.CameraDmaComplete:0000004c $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1106   .bss.buf1:00000000 buf1
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:136    .text.MX_SPI1_Init:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:142    .text.MX_SPI1_Init:00000000 MX_SPI1_Init
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:221    .text.MX_SPI1_Init:00000044 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:227    .text.HAL_SPI_MspInit:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:233    .text.HAL_SPI_MspInit:00000000 HAL_SPI_MspInit
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:442    .text.HAL_SPI_MspInit:000000c0 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:451    .text.HAL_SPI_MspDeInit:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:457    .text.HAL_SPI_MspDeInit:00000000 HAL_SPI_MspDeInit
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:507    .text.HAL_SPI_MspDeInit:00000030 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:513    .text.SPI1_ReadWriteByte:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:519    .text.SPI1_ReadWriteByte:00000000 SPI1_ReadWriteByte
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:573    .text.SPI1_ReadWriteByte:00000034 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:578    .text.DMA1_RX:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:584    .text.DMA1_RX:00000000 DMA1_RX
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:646    .text.DMA1_RX:0000002c $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1160   .bss.spiDummyTx:00000000 spiDummyTx
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:652    .text.DMA1_SendtoUart:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:658    .text.DMA1_SendtoUart:00000000 DMA1_SendtoUart
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:706    .text.DMA1_SendtoUart:00000018 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:711    .text.SendImageToESP:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:717    .text.SendImageToESP:00000000 SendImageToESP
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:794    .text.SendImageToESP:0000003c $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:800    .text.SendBufferAsHex:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:806    .text.SendBufferAsHex:00000000 SendBufferAsHex
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:902    .text.SendBufferAsHex:00000060 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:909    .text.SingleCapTransfer:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:915    .text.SingleCapTransfer:00000000 SingleCapTransfer
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:986    .text.SingleCapTransfer:00000048 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:995    .text.HAL_SPI_TxRxCpltCallback:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1001   .text.HAL_SPI_TxRxCpltCallback:00000000 HAL_SPI_TxRxCpltCallback
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1023   .text.HAL_SPI_RxCpltCallback:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1029   .text.HAL_SPI_RxCpltCallback:00000000 HAL_SPI_RxCpltCallback
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1051   .text.HAL_UART_TxCpltCallback:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1057   .text.HAL_UART_TxCpltCallback:00000000 HAL_UART_TxCpltCallback
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1084   .text.HAL_UART_TxCpltCallback:00000010 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1134   .bss.jpeglen:00000000 jpeglen
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1154   .bss.sendlen:00000000 sendlen
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1166   .data.send_OK:00000000 send_OK
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1147   .bss.receive_OK:00000000 receive_OK
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1141   .bss.picbuf:00000000 picbuf
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1120   .bss.hdma_spi1_tx:00000000 hdma_spi1_tx
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1113   .bss.hdma_spi1_rx:00000000 hdma_spi1_rx
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1127   .bss.hspi1:00000000 hspi1
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1098   .rodata:00000000 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1103   .bss.buf1:00000000 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1109   .bss.hdma_spi1_rx:00000000 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1116   .bss.hdma_spi1_tx:00000000 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1123   .bss.hspi1:00000000 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1130   .bss.jpeglen:00000000 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1137   .bss.picbuf:00000000 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1148   .bss.receive_OK:00000000 $d
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s 			page 33
+
+
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1150   .bss.sendlen:00000000 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1157   .bss.spiDummyTx:00000000 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1169   .rodata.hexDigits.0:00000000 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1173   .rodata.hexDigits.0:00000000 hexDigits.0
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1176   .rodata.imageHeader.1:00000000 $d
+C:\Users\Sid\AppData\Local\Temp\ccFLGWKY.s:1180   .rodata.imageHeader.1:00000000 imageHeader.1
+
+UNDEFINED SYMBOLS
+CS_HIGH
+HAL_SPI_Init
+Error_Handler
+HAL_GPIO_Init
+HAL_DMA_Init
+HAL_GPIO_DeInit
+HAL_DMA_DeInit
+HAL_SPI_TransmitReceive
+CS_LOW
+set_fifo_burst
+HAL_SPI_TransmitReceive_DMA
+HAL_UART_Transmit_DMA
+huart4
+HAL_UART_Transmit
+flush_fifo
+clear_fifo_flag
+start_capture
+get_bit
+read_fifo_length

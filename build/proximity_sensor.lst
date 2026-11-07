@@ -1,0 +1,367 @@
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"proximity_sensor.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.VCNL4040_Write16,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	VCNL4040_Write16:
+  26              	.LVL0:
+  27              	.LFB228:
+  28              		.file 1 "Core/Src/proximity_sensor.c"
+   1:Core/Src/proximity_sensor.c **** #include "proximity_sensor.h"
+   2:Core/Src/proximity_sensor.c **** #include "i2c.h"
+   3:Core/Src/proximity_sensor.c **** 
+   4:Core/Src/proximity_sensor.c **** #define VCNL4040_I2C_ADDRESS (0x60U << 1)
+   5:Core/Src/proximity_sensor.c **** #define VCNL4040_PS_CONF1_2 0x03U
+   6:Core/Src/proximity_sensor.c **** #define VCNL4040_PS_DATA     0x08U
+   7:Core/Src/proximity_sensor.c **** 
+   8:Core/Src/proximity_sensor.c **** static HAL_StatusTypeDef VCNL4040_Write16(uint8_t reg, uint16_t value)
+   9:Core/Src/proximity_sensor.c **** {
+  29              		.loc 1 9 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 8
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 9 1 is_stmt 0 view .LVU1
+  34 0000 00B5     		push	{lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 14, -4
+  38 0002 87B0     		sub	sp, sp, #28
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 32
+  41 0004 0246     		mov	r2, r0
+  10:Core/Src/proximity_sensor.c ****   uint8_t data[2] = {(uint8_t)(value & 0xFFU), (uint8_t)(value >> 8)};
+  42              		.loc 1 10 3 is_stmt 1 view .LVU2
+  43              		.loc 1 10 11 is_stmt 0 view .LVU3
+  44 0006 8DF81410 		strb	r1, [sp, #20]
+  45              		.loc 1 10 48 view .LVU4
+  46 000a 090A     		lsrs	r1, r1, #8
+  47              	.LVL1:
+  48              		.loc 1 10 11 view .LVU5
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s 			page 2
+
+
+  49 000c 8DF81510 		strb	r1, [sp, #21]
+  11:Core/Src/proximity_sensor.c **** 
+  12:Core/Src/proximity_sensor.c ****   return HAL_I2C_Mem_Write(&hi2c1, VCNL4040_I2C_ADDRESS, reg,
+  50              		.loc 1 12 3 is_stmt 1 view .LVU6
+  51              		.loc 1 12 10 is_stmt 0 view .LVU7
+  52 0010 6423     		movs	r3, #100
+  53 0012 0293     		str	r3, [sp, #8]
+  54 0014 0223     		movs	r3, #2
+  55 0016 0193     		str	r3, [sp, #4]
+  56 0018 05AB     		add	r3, sp, #20
+  57 001a 0093     		str	r3, [sp]
+  58 001c 0123     		movs	r3, #1
+  59 001e C021     		movs	r1, #192
+  60 0020 0248     		ldr	r0, .L3
+  61              	.LVL2:
+  62              		.loc 1 12 10 view .LVU8
+  63 0022 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+  64              	.LVL3:
+  13:Core/Src/proximity_sensor.c ****                            I2C_MEMADD_SIZE_8BIT, data, sizeof(data), 100U);
+  14:Core/Src/proximity_sensor.c **** }
+  65              		.loc 1 14 1 view .LVU9
+  66 0026 07B0     		add	sp, sp, #28
+  67              	.LCFI2:
+  68              		.cfi_def_cfa_offset 4
+  69              		@ sp needed
+  70 0028 5DF804FB 		ldr	pc, [sp], #4
+  71              	.L4:
+  72              		.align	2
+  73              	.L3:
+  74 002c 00000000 		.word	hi2c1
+  75              		.cfi_endproc
+  76              	.LFE228:
+  78              		.section	.text.VCNL4040_Read16,"ax",%progbits
+  79              		.align	1
+  80              		.syntax unified
+  81              		.thumb
+  82              		.thumb_func
+  84              	VCNL4040_Read16:
+  85              	.LVL4:
+  86              	.LFB229:
+  15:Core/Src/proximity_sensor.c **** 
+  16:Core/Src/proximity_sensor.c **** static HAL_StatusTypeDef VCNL4040_Read16(uint8_t reg, uint16_t *value)
+  17:Core/Src/proximity_sensor.c **** {
+  87              		.loc 1 17 1 is_stmt 1 view -0
+  88              		.cfi_startproc
+  89              		@ args = 0, pretend = 0, frame = 8
+  90              		@ frame_needed = 0, uses_anonymous_args = 0
+  91              		.loc 1 17 1 is_stmt 0 view .LVU11
+  92 0000 10B5     		push	{r4, lr}
+  93              	.LCFI3:
+  94              		.cfi_def_cfa_offset 8
+  95              		.cfi_offset 4, -8
+  96              		.cfi_offset 14, -4
+  97 0002 86B0     		sub	sp, sp, #24
+  98              	.LCFI4:
+  99              		.cfi_def_cfa_offset 32
+ 100 0004 0246     		mov	r2, r0
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s 			page 3
+
+
+ 101 0006 0C46     		mov	r4, r1
+  18:Core/Src/proximity_sensor.c ****   uint8_t data[2];
+ 102              		.loc 1 18 3 is_stmt 1 view .LVU12
+  19:Core/Src/proximity_sensor.c ****   HAL_StatusTypeDef status;
+ 103              		.loc 1 19 3 view .LVU13
+  20:Core/Src/proximity_sensor.c **** 
+  21:Core/Src/proximity_sensor.c ****   status = HAL_I2C_Mem_Read(&hi2c1, VCNL4040_I2C_ADDRESS, reg,
+ 104              		.loc 1 21 3 view .LVU14
+ 105              		.loc 1 21 12 is_stmt 0 view .LVU15
+ 106 0008 6423     		movs	r3, #100
+ 107 000a 0293     		str	r3, [sp, #8]
+ 108 000c 0223     		movs	r3, #2
+ 109 000e 0193     		str	r3, [sp, #4]
+ 110 0010 05AB     		add	r3, sp, #20
+ 111 0012 0093     		str	r3, [sp]
+ 112 0014 0123     		movs	r3, #1
+ 113 0016 C021     		movs	r1, #192
+ 114              	.LVL5:
+ 115              		.loc 1 21 12 view .LVU16
+ 116 0018 0648     		ldr	r0, .L8
+ 117              	.LVL6:
+ 118              		.loc 1 21 12 view .LVU17
+ 119 001a FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 120              	.LVL7:
+  22:Core/Src/proximity_sensor.c ****                             I2C_MEMADD_SIZE_8BIT, data, sizeof(data), 100U);
+  23:Core/Src/proximity_sensor.c ****   if (status == HAL_OK)
+ 121              		.loc 1 23 3 is_stmt 1 view .LVU18
+ 122              		.loc 1 23 6 is_stmt 0 view .LVU19
+ 123 001e 30B9     		cbnz	r0, .L6
+  24:Core/Src/proximity_sensor.c ****   {
+  25:Core/Src/proximity_sensor.c ****     *value = (uint16_t)data[0] | ((uint16_t)data[1] << 8);
+ 124              		.loc 1 25 5 is_stmt 1 view .LVU20
+ 125              		.loc 1 25 28 is_stmt 0 view .LVU21
+ 126 0020 9DF81430 		ldrb	r3, [sp, #20]	@ zero_extendqisi2
+ 127              		.loc 1 25 49 view .LVU22
+ 128 0024 9DF81520 		ldrb	r2, [sp, #21]	@ zero_extendqisi2
+ 129              		.loc 1 25 32 view .LVU23
+ 130 0028 43EA0223 		orr	r3, r3, r2, lsl #8
+ 131              		.loc 1 25 12 view .LVU24
+ 132 002c 2380     		strh	r3, [r4]	@ movhi
+ 133              	.L6:
+  26:Core/Src/proximity_sensor.c ****   }
+  27:Core/Src/proximity_sensor.c **** 
+  28:Core/Src/proximity_sensor.c ****   return status;
+ 134              		.loc 1 28 3 is_stmt 1 view .LVU25
+  29:Core/Src/proximity_sensor.c **** }
+ 135              		.loc 1 29 1 is_stmt 0 view .LVU26
+ 136 002e 06B0     		add	sp, sp, #24
+ 137              	.LCFI5:
+ 138              		.cfi_def_cfa_offset 8
+ 139              		@ sp needed
+ 140 0030 10BD     		pop	{r4, pc}
+ 141              	.LVL8:
+ 142              	.L9:
+ 143              		.loc 1 29 1 view .LVU27
+ 144 0032 00BF     		.align	2
+ 145              	.L8:
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s 			page 4
+
+
+ 146 0034 00000000 		.word	hi2c1
+ 147              		.cfi_endproc
+ 148              	.LFE229:
+ 150              		.section	.text.ProximitySensor_Init,"ax",%progbits
+ 151              		.align	1
+ 152              		.global	ProximitySensor_Init
+ 153              		.syntax unified
+ 154              		.thumb
+ 155              		.thumb_func
+ 157              	ProximitySensor_Init:
+ 158              	.LFB230:
+  30:Core/Src/proximity_sensor.c **** 
+  31:Core/Src/proximity_sensor.c **** HAL_StatusTypeDef ProximitySensor_Init(void)
+  32:Core/Src/proximity_sensor.c **** {
+ 159              		.loc 1 32 1 is_stmt 1 view -0
+ 160              		.cfi_startproc
+ 161              		@ args = 0, pretend = 0, frame = 0
+ 162              		@ frame_needed = 0, uses_anonymous_args = 0
+ 163 0000 10B5     		push	{r4, lr}
+ 164              	.LCFI6:
+ 165              		.cfi_def_cfa_offset 8
+ 166              		.cfi_offset 4, -8
+ 167              		.cfi_offset 14, -4
+  33:Core/Src/proximity_sensor.c ****   if (HAL_I2C_IsDeviceReady(&hi2c1, VCNL4040_I2C_ADDRESS, 3U, 100U) != HAL_OK)
+ 168              		.loc 1 33 3 view .LVU29
+ 169              		.loc 1 33 7 is_stmt 0 view .LVU30
+ 170 0002 6423     		movs	r3, #100
+ 171 0004 0322     		movs	r2, #3
+ 172 0006 C021     		movs	r1, #192
+ 173 0008 0948     		ldr	r0, .L17
+ 174 000a FFF7FEFF 		bl	HAL_I2C_IsDeviceReady
+ 175              	.LVL9:
+ 176              		.loc 1 33 6 view .LVU31
+ 177 000e 10B1     		cbz	r0, .L15
+  34:Core/Src/proximity_sensor.c ****   {
+  35:Core/Src/proximity_sensor.c ****     return HAL_ERROR;
+ 178              		.loc 1 35 12 view .LVU32
+ 179 0010 0124     		movs	r4, #1
+ 180              	.L11:
+  36:Core/Src/proximity_sensor.c ****   }
+  37:Core/Src/proximity_sensor.c **** 
+  38:Core/Src/proximity_sensor.c ****   /* Enable proximity conversion; the VCNL4040 registers use little-endian data. */
+  39:Core/Src/proximity_sensor.c ****   if (VCNL4040_Write16(VCNL4040_PS_CONF1_2, 0x0800U) != HAL_OK)
+  40:Core/Src/proximity_sensor.c ****   {
+  41:Core/Src/proximity_sensor.c ****     return HAL_ERROR;
+  42:Core/Src/proximity_sensor.c ****   }
+  43:Core/Src/proximity_sensor.c **** 
+  44:Core/Src/proximity_sensor.c ****   HAL_Delay(10U);
+  45:Core/Src/proximity_sensor.c ****   return HAL_OK;
+  46:Core/Src/proximity_sensor.c **** }
+ 181              		.loc 1 46 1 view .LVU33
+ 182 0012 2046     		mov	r0, r4
+ 183 0014 10BD     		pop	{r4, pc}
+ 184              	.L15:
+  39:Core/Src/proximity_sensor.c ****   {
+ 185              		.loc 1 39 3 is_stmt 1 view .LVU34
+  39:Core/Src/proximity_sensor.c ****   {
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s 			page 5
+
+
+ 186              		.loc 1 39 7 is_stmt 0 view .LVU35
+ 187 0016 4FF40061 		mov	r1, #2048
+ 188 001a 0320     		movs	r0, #3
+ 189 001c FFF7FEFF 		bl	VCNL4040_Write16
+ 190              	.LVL10:
+  39:Core/Src/proximity_sensor.c ****   {
+ 191              		.loc 1 39 6 view .LVU36
+ 192 0020 0446     		mov	r4, r0
+ 193 0022 08B1     		cbz	r0, .L16
+  41:Core/Src/proximity_sensor.c ****   }
+ 194              		.loc 1 41 12 view .LVU37
+ 195 0024 0124     		movs	r4, #1
+ 196 0026 F4E7     		b	.L11
+ 197              	.L16:
+  44:Core/Src/proximity_sensor.c ****   return HAL_OK;
+ 198              		.loc 1 44 3 is_stmt 1 view .LVU38
+ 199 0028 0A20     		movs	r0, #10
+ 200 002a FFF7FEFF 		bl	HAL_Delay
+ 201              	.LVL11:
+  45:Core/Src/proximity_sensor.c **** }
+ 202              		.loc 1 45 3 view .LVU39
+  45:Core/Src/proximity_sensor.c **** }
+ 203              		.loc 1 45 10 is_stmt 0 view .LVU40
+ 204 002e F0E7     		b	.L11
+ 205              	.L18:
+ 206              		.align	2
+ 207              	.L17:
+ 208 0030 00000000 		.word	hi2c1
+ 209              		.cfi_endproc
+ 210              	.LFE230:
+ 212              		.section	.text.ProximitySensor_Read,"ax",%progbits
+ 213              		.align	1
+ 214              		.global	ProximitySensor_Read
+ 215              		.syntax unified
+ 216              		.thumb
+ 217              		.thumb_func
+ 219              	ProximitySensor_Read:
+ 220              	.LVL12:
+ 221              	.LFB231:
+  47:Core/Src/proximity_sensor.c **** 
+  48:Core/Src/proximity_sensor.c **** HAL_StatusTypeDef ProximitySensor_Read(uint16_t *value)
+  49:Core/Src/proximity_sensor.c **** {
+ 222              		.loc 1 49 1 is_stmt 1 view -0
+ 223              		.cfi_startproc
+ 224              		@ args = 0, pretend = 0, frame = 0
+ 225              		@ frame_needed = 0, uses_anonymous_args = 0
+  50:Core/Src/proximity_sensor.c ****   if (value == NULL)
+ 226              		.loc 1 50 3 view .LVU42
+ 227              		.loc 1 50 6 is_stmt 0 view .LVU43
+ 228 0000 28B1     		cbz	r0, .L21
+  49:Core/Src/proximity_sensor.c ****   if (value == NULL)
+ 229              		.loc 1 49 1 view .LVU44
+ 230 0002 08B5     		push	{r3, lr}
+ 231              	.LCFI7:
+ 232              		.cfi_def_cfa_offset 8
+ 233              		.cfi_offset 3, -8
+ 234              		.cfi_offset 14, -4
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s 			page 6
+
+
+ 235 0004 0146     		mov	r1, r0
+  51:Core/Src/proximity_sensor.c ****   {
+  52:Core/Src/proximity_sensor.c ****     return HAL_ERROR;
+  53:Core/Src/proximity_sensor.c ****   }
+  54:Core/Src/proximity_sensor.c **** 
+  55:Core/Src/proximity_sensor.c ****   return VCNL4040_Read16(VCNL4040_PS_DATA, value);
+ 236              		.loc 1 55 3 is_stmt 1 view .LVU45
+ 237              		.loc 1 55 10 is_stmt 0 view .LVU46
+ 238 0006 0820     		movs	r0, #8
+ 239              	.LVL13:
+ 240              		.loc 1 55 10 view .LVU47
+ 241 0008 FFF7FEFF 		bl	VCNL4040_Read16
+ 242              	.LVL14:
+  56:Core/Src/proximity_sensor.c **** }
+ 243              		.loc 1 56 1 view .LVU48
+ 244 000c 08BD     		pop	{r3, pc}
+ 245              	.LVL15:
+ 246              	.L21:
+ 247              	.LCFI8:
+ 248              		.cfi_def_cfa_offset 0
+ 249              		.cfi_restore 3
+ 250              		.cfi_restore 14
+  52:Core/Src/proximity_sensor.c ****   }
+ 251              		.loc 1 52 12 view .LVU49
+ 252 000e 0120     		movs	r0, #1
+ 253              	.LVL16:
+ 254              		.loc 1 56 1 view .LVU50
+ 255 0010 7047     		bx	lr
+ 256              		.cfi_endproc
+ 257              	.LFE231:
+ 259              		.text
+ 260              	.Letext0:
+ 261              		.file 2 "c:\\programdata\\chocolatey\\lib\\gcc-arm-embedded\\tools\\gcc-arm-none-eabi-10.3-2021.10
+ 262              		.file 3 "c:\\programdata\\chocolatey\\lib\\gcc-arm-embedded\\tools\\gcc-arm-none-eabi-10.3-2021.10
+ 263              		.file 4 "Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l452xx.h"
+ 264              		.file 5 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 265              		.file 6 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 266              		.file 7 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c.h"
+ 267              		.file 8 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_dma.h"
+ 268              		.file 9 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h"
+ 269              		.file 10 "Core/Inc/i2c.h"
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 proximity_sensor.c
+C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s:20     .text.VCNL4040_Write16:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s:25     .text.VCNL4040_Write16:00000000 VCNL4040_Write16
+C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s:74     .text.VCNL4040_Write16:0000002c $d
+C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s:79     .text.VCNL4040_Read16:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s:84     .text.VCNL4040_Read16:00000000 VCNL4040_Read16
+C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s:146    .text.VCNL4040_Read16:00000034 $d
+C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s:151    .text.ProximitySensor_Init:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s:157    .text.ProximitySensor_Init:00000000 ProximitySensor_Init
+C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s:208    .text.ProximitySensor_Init:00000030 $d
+C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s:213    .text.ProximitySensor_Read:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccSiDq0h.s:219    .text.ProximitySensor_Read:00000000 ProximitySensor_Read
+
+UNDEFINED SYMBOLS
+HAL_I2C_Mem_Write
+hi2c1
+HAL_I2C_Mem_Read
+HAL_I2C_IsDeviceReady
+HAL_Delay

@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "name": "STM32L452RE",
+            "compilerPath": "C:\\ProgramData\\chocolatey\\bin\\arm-none-eabi-gcc.exe",
+            "compileCommands": "${workspaceFolder}\\build\\Debug\\compile_commands.json",
+            "includePath": [
+                "${workspaceFolder}\\Core\\Inc",
+                "${workspaceFolder}\\USB_DEVICE\\App",
+                "${workspaceFolder}\\USB_DEVICE\\Target",
+                "${workspaceFolder}\\Drivers\\STM32L4xx_HAL_Driver\\Inc",
+                "${workspaceFolder}\\Drivers\\STM32L4xx_HAL_Driver\\Inc\\Legacy",
+                "${workspaceFolder}\\Middlewares\\ST\\STM32_USB_Device_Library\\Core\\Inc",
+                "${workspaceFolder}\\Middlewares\\ST\\STM32_USB_Device_Library\\Class\\CDC\\Inc",
+                "${workspaceFolder}\\Drivers\\CMSIS\\Device\\ST\\STM32L4xx\\Include",
+                "${workspaceFolder}\\Drivers\\CMSIS\\Include"
+            ],
+            "defines": [
+                "DEBUG",
+                "USE_HAL_DRIVER",
+                "STM32L452xx"
+            ],
+            "cStandard": "gnu11",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}

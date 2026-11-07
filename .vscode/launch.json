@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+    "name": "Debug STM32L452RE (ST-LINK via OpenOCD)",
+    "type": "cortex-debug",
+    "request": "launch",
+    "servertype": "openocd", // Changed from stutil
+    "cwd": "${workspaceRoot}",
+    "executable": "${workspaceFolder}\\build\\STM-1.elf",
+    "preLaunchTask": "make",
+    "device": "STM32L452RE",
+    "configFiles": [
+        "interface/stlink.cfg",
+        "target/stm32l4x.cfg"
+    ]
+}
+    ]
+}

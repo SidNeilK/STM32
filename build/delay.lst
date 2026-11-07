@@ -1,0 +1,173 @@
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccMjLRuf.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"delay.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.delay_init,"ax",%progbits
+  20              		.align	1
+  21              		.global	delay_init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	delay_init:
+  27              	.LFB228:
+  28              		.file 1 "Core/Src/delay.c"
+   1:Core/Src/delay.c **** #include "delay.h"
+   2:Core/Src/delay.c **** #include "stm32l4xx_hal.h"
+   3:Core/Src/delay.c **** #include "tim.h"
+   4:Core/Src/delay.c **** 
+   5:Core/Src/delay.c **** void delay_init(void)
+   6:Core/Src/delay.c **** {
+  29              		.loc 1 6 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+   7:Core/Src/delay.c ****   (void)HAL_TIM_Base_Start(&htim2);
+  38              		.loc 1 7 3 view .LVU1
+  39              		.loc 1 7 9 is_stmt 0 view .LVU2
+  40 0002 0248     		ldr	r0, .L3
+  41 0004 FFF7FEFF 		bl	HAL_TIM_Base_Start
+  42              	.LVL0:
+   8:Core/Src/delay.c **** }
+  43              		.loc 1 8 1 view .LVU3
+  44 0008 08BD     		pop	{r3, pc}
+  45              	.L4:
+  46 000a 00BF     		.align	2
+  47              	.L3:
+  48 000c 00000000 		.word	htim2
+  49              		.cfi_endproc
+  50              	.LFE228:
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccMjLRuf.s 			page 2
+
+
+  52              		.section	.text.delay_us,"ax",%progbits
+  53              		.align	1
+  54              		.global	delay_us
+  55              		.syntax unified
+  56              		.thumb
+  57              		.thumb_func
+  59              	delay_us:
+  60              	.LVL1:
+  61              	.LFB229:
+   9:Core/Src/delay.c **** 
+  10:Core/Src/delay.c **** void delay_us(uint32_t microseconds)
+  11:Core/Src/delay.c **** {
+  62              		.loc 1 11 1 is_stmt 1 view -0
+  63              		.cfi_startproc
+  64              		@ args = 0, pretend = 0, frame = 0
+  65              		@ frame_needed = 0, uses_anonymous_args = 0
+  66              		@ link register save eliminated.
+  12:Core/Src/delay.c ****   __HAL_TIM_SET_COUNTER(&htim2, 0U);
+  67              		.loc 1 12 3 view .LVU5
+  68 0000 034B     		ldr	r3, .L7
+  69 0002 1A68     		ldr	r2, [r3]
+  70 0004 0023     		movs	r3, #0
+  71 0006 5362     		str	r3, [r2, #36]
+  13:Core/Src/delay.c ****   while (__HAL_TIM_GET_COUNTER(&htim2) < microseconds)
+  72              		.loc 1 13 3 view .LVU6
+  73              	.L6:
+  14:Core/Src/delay.c ****   {
+  15:Core/Src/delay.c ****   }
+  74              		.loc 1 15 3 discriminator 1 view .LVU7
+  13:Core/Src/delay.c ****   while (__HAL_TIM_GET_COUNTER(&htim2) < microseconds)
+  75              		.loc 1 13 9 discriminator 1 view .LVU8
+  13:Core/Src/delay.c ****   while (__HAL_TIM_GET_COUNTER(&htim2) < microseconds)
+  76              		.loc 1 13 10 is_stmt 0 discriminator 1 view .LVU9
+  77 0008 536A     		ldr	r3, [r2, #36]
+  13:Core/Src/delay.c ****   while (__HAL_TIM_GET_COUNTER(&htim2) < microseconds)
+  78              		.loc 1 13 9 discriminator 1 view .LVU10
+  79 000a 8342     		cmp	r3, r0
+  80 000c FCD3     		bcc	.L6
+  16:Core/Src/delay.c **** }
+  81              		.loc 1 16 1 view .LVU11
+  82 000e 7047     		bx	lr
+  83              	.L8:
+  84              		.align	2
+  85              	.L7:
+  86 0010 00000000 		.word	htim2
+  87              		.cfi_endproc
+  88              	.LFE229:
+  90              		.section	.text.delay_ms,"ax",%progbits
+  91              		.align	1
+  92              		.global	delay_ms
+  93              		.syntax unified
+  94              		.thumb
+  95              		.thumb_func
+  97              	delay_ms:
+  98              	.LVL2:
+  99              	.LFB230:
+  17:Core/Src/delay.c **** 
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccMjLRuf.s 			page 3
+
+
+  18:Core/Src/delay.c **** void delay_ms(uint16_t milliseconds)
+  19:Core/Src/delay.c **** {
+ 100              		.loc 1 19 1 is_stmt 1 view -0
+ 101              		.cfi_startproc
+ 102              		@ args = 0, pretend = 0, frame = 0
+ 103              		@ frame_needed = 0, uses_anonymous_args = 0
+ 104              		.loc 1 19 1 is_stmt 0 view .LVU13
+ 105 0000 08B5     		push	{r3, lr}
+ 106              	.LCFI1:
+ 107              		.cfi_def_cfa_offset 8
+ 108              		.cfi_offset 3, -8
+ 109              		.cfi_offset 14, -4
+  20:Core/Src/delay.c ****   HAL_Delay(milliseconds);
+ 110              		.loc 1 20 3 is_stmt 1 view .LVU14
+ 111 0002 FFF7FEFF 		bl	HAL_Delay
+ 112              	.LVL3:
+  21:Core/Src/delay.c **** }
+ 113              		.loc 1 21 1 is_stmt 0 view .LVU15
+ 114 0006 08BD     		pop	{r3, pc}
+ 115              		.cfi_endproc
+ 116              	.LFE230:
+ 118              		.text
+ 119              	.Letext0:
+ 120              		.file 2 "c:\\programdata\\chocolatey\\lib\\gcc-arm-embedded\\tools\\gcc-arm-none-eabi-10.3-2021.10
+ 121              		.file 3 "c:\\programdata\\chocolatey\\lib\\gcc-arm-embedded\\tools\\gcc-arm-none-eabi-10.3-2021.10
+ 122              		.file 4 "Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l452xx.h"
+ 123              		.file 5 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 124              		.file 6 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 125              		.file 7 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h"
+ 126              		.file 8 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h"
+ 127              		.file 9 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_dma.h"
+ 128              		.file 10 "Core/Inc/tim.h"
+ARM GAS  C:\Users\Sid\AppData\Local\Temp\ccMjLRuf.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 delay.c
+C:\Users\Sid\AppData\Local\Temp\ccMjLRuf.s:20     .text.delay_init:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccMjLRuf.s:26     .text.delay_init:00000000 delay_init
+C:\Users\Sid\AppData\Local\Temp\ccMjLRuf.s:48     .text.delay_init:0000000c $d
+C:\Users\Sid\AppData\Local\Temp\ccMjLRuf.s:53     .text.delay_us:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccMjLRuf.s:59     .text.delay_us:00000000 delay_us
+C:\Users\Sid\AppData\Local\Temp\ccMjLRuf.s:86     .text.delay_us:00000010 $d
+C:\Users\Sid\AppData\Local\Temp\ccMjLRuf.s:91     .text.delay_ms:00000000 $t
+C:\Users\Sid\AppData\Local\Temp\ccMjLRuf.s:97     .text.delay_ms:00000000 delay_ms
+
+UNDEFINED SYMBOLS
+HAL_TIM_Base_Start
+htim2
+HAL_Delay

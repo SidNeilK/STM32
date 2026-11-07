@@ -1,0 +1,9 @@
+C:/Users/Sid/Documents/STM/STM-1/Core/Src/main.c:83:26:VCNL4040_Write16	40	static
+C:/Users/Sid/Documents/STM/STM-1/Core/Src/main.c:91:26:VCNL4040_Read16	40	static
+C:/Users/Sid/Documents/STM/STM-1/Core/Src/main.c:106:26:VCNL4040_Init	8	static
+C:/Users/Sid/Documents/STM/STM-1/Core/Src/main.c:117:26:VCNL4040_ReadProximity	16	static
+C:/Users/Sid/Documents/STM/STM-1/Core/Src/main.c:122:13:USB_Send	24	static
+C:/Users/Sid/Documents/STM/STM-1/Core/Src/main.c:144:13:ProcessUsbCommand	200	static
+C:/Users/Sid/Documents/STM/STM-1/Core/Src/main.c:194:5:main	8	static
+C:/Users/Sid/Documents/STM/STM-1/Core/Src/main.c:246:6:SystemClock_Config	96	static
+C:/Users/Sid/Documents/STM/STM-1/Core/Src/main.c:307:6:Error_Handler	4	static
